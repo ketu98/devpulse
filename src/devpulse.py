@@ -22,27 +22,43 @@ MANIFEST = ROOT / ".devpulse_manifest.json"
 
 
 def load_json(path: Path):
-    return json.loads(path.read_text(encoding="utf-8"))
+    return json.loads(
+        path.read_text(
+            encoding="utf-8"
+        )
+    )
 
 
 def save_json(path: Path, obj):
     path.write_text(
-        json.dumps(obj, indent=2),
+        json.dumps(
+            obj,
+            indent=2
+        ),
         encoding="utf-8"
     )
 
 
 def utc_now():
-    return dt.datetime.now(dt.timezone.utc)
+    return dt.datetime.now(
+        dt.timezone.utc
+    )
 
 
 def iso_week():
-    year, week, _ = utc_now().isocalendar()
+    year, week, _ = (
+        utc_now()
+        .isocalendar()
+    )
+
     return f"{year}-W{week:02d}"
 
 
 def weekday():
-    return utc_now().strftime("%A")
+    return (
+        utc_now()
+        .strftime("%A")
+    )
 
 
 def slot():
@@ -58,10 +74,13 @@ def slot():
 
 
 # ============================================================
-# WEEKLY RANDOM SCHEDULING
+# RANDOM WEEKLY SCHEDULING
 # ============================================================
 
-def refresh_week(state, cfg):
+def refresh_week(
+    state,
+    cfg
+):
     current_week = iso_week()
 
     if state.get("week") == current_week:
@@ -87,7 +106,7 @@ def refresh_week(state, cfg):
         target_runs
     )
 
-    slots = [
+    available_slots = [
         "morning",
         "afternoon",
         "evening"
@@ -96,7 +115,9 @@ def refresh_week(state, cfg):
     schedule = [
         {
             "day": day,
-            "slot": random.choice(slots)
+            "slot": random.choice(
+                available_slots
+            )
         }
         for day in sorted(
             selected_days,
@@ -105,16 +126,26 @@ def refresh_week(state, cfg):
     ]
 
     state.update({
-        "week": current_week,
-        "target_runs": target_runs,
-        "schedule": schedule,
-        "published_this_week": []
+        "week":
+            current_week,
+
+        "target_runs":
+            target_runs,
+
+        "schedule":
+            schedule,
+
+        "published_this_week":
+            []
     })
 
     return state
 
 
-def should_publish(state, force=False):
+def should_publish(
+    state,
+    force=False
+):
     if force:
         return True
 
@@ -124,7 +155,8 @@ def should_publish(state, force=False):
 
     scheduled = {
         f"{item['day']}:{item['slot']}"
-        for item in state.get(
+        for item
+        in state.get(
             "schedule",
             []
         )
@@ -132,7 +164,8 @@ def should_publish(state, force=False):
 
     return (
         current_key in scheduled
-        and current_key not in state.get(
+        and current_key
+        not in state.get(
             "published_this_week",
             []
         )
@@ -143,19 +176,25 @@ def should_publish(state, force=False):
 # TOPIC SELECTION
 # ============================================================
 
-def weighted_category(cfg):
-    pairs = list(
-        cfg["category_weights"].items()
+def weighted_category(
+    cfg
+):
+    items = list(
+        cfg[
+            "category_weights"
+        ].items()
     )
 
     categories = [
-        pair[0]
-        for pair in pairs
+        item[0]
+        for item
+        in items
     ]
 
     weights = [
-        pair[1]
-        for pair in pairs
+        item[1]
+        for item
+        in items
     ]
 
     return random.choices(
@@ -184,7 +223,8 @@ def choose_topic(
         )
         for category, values
         in topics.items()
-        for topic in values
+        for topic
+        in values
         if topic not in used_topics
     ]
 
@@ -199,7 +239,8 @@ def choose_topic(
 
     candidates = [
         item
-        for item in unused
+        for item
+        in unused
         if item[0] == preferred
     ]
 
@@ -228,21 +269,35 @@ def ollama_chat(
     )
 
     payload = {
-        "model": model,
-        "stream": False,
+        "model":
+            model,
+
+        "stream":
+            False,
+
         "messages": [
             {
-                "role": "system",
-                "content": system
+                "role":
+                    "system",
+
+                "content":
+                    system
             },
             {
-                "role": "user",
-                "content": prompt
+                "role":
+                    "user",
+
+                "content":
+                    prompt
             }
         ],
+
         "options": {
-            "temperature": temperature,
-            "num_predict": 1200
+            "temperature":
+                temperature,
+
+            "num_predict":
+                1200
         }
     }
 
@@ -254,11 +309,12 @@ def ollama_chat(
 
     response.raise_for_status()
 
-    return response.json()[
-        "message"
-    ][
-        "content"
-    ].strip()
+    return (
+        response.json()
+        ["message"]
+        ["content"]
+        .strip()
+    )
 
 
 def strip_fences(
@@ -289,7 +345,9 @@ def extract_json(
         text
     )
 
-    start = text.find("{")
+    start = text.find(
+        "{"
+    )
 
     if start < 0:
         raise ValueError(
@@ -304,18 +362,26 @@ def extract_json(
         start,
         len(text)
     ):
-        char = text[index]
+        char = text[
+            index
+        ]
 
         if escape:
             escape = False
             continue
 
-        if char == "\\" and in_string:
+        if (
+            char == "\\"
+            and in_string
+        ):
             escape = True
             continue
 
         if char == '"':
-            in_string = not in_string
+            in_string = (
+                not in_string
+            )
+
             continue
 
         if not in_string:
@@ -339,7 +405,7 @@ def extract_json(
 
 def retry(
     label,
-    func,
+    function,
     attempts=3
 ):
     last_error = None
@@ -354,18 +420,20 @@ def retry(
                 f"{attempt}/{attempts}"
             )
 
-            return func()
+            return function()
 
         except Exception as ex:
             last_error = ex
 
             print(
-                f"{label} failed: {ex}"
+                f"{label} failed: "
+                f"{ex}"
             )
 
     raise RuntimeError(
         f"{label} failed after "
-        f"{attempts} attempts: "
+        f"{attempts} attempts. "
+        f"Last error: "
         f"{last_error}"
     )
 
@@ -381,7 +449,10 @@ def generate_metadata(
 ):
     raw = ollama_chat(
         model,
-        "Return concise, valid JSON metadata only.",
+        """
+Return concise,
+valid JSON metadata only.
+""",
         f"""
 Topic:
 {topic}
@@ -397,20 +468,29 @@ Return ONLY:
   "commit_message": "natural conventional-style git commit message"
 }}
 
-No explanations.
-No Markdown fences.
+Rules:
+
+- no Markdown fences
+- no explanations
+- lowercase kebab-case slug
 """,
         temperature=0.1,
         timeout_seconds=150
     )
 
     obj = json.loads(
-        extract_json(raw)
+        extract_json(
+            raw
+        )
     )
 
-    slug = obj.get(
-        "slug",
-        ""
+    slug = (
+        obj
+        .get(
+            "slug",
+            ""
+        )
+        .strip()
     )
 
     if not re.fullmatch(
@@ -437,12 +517,16 @@ def generate_article(
     article = ollama_chat(
         model,
         """
-You are a senior software engineer writing practical learning notes.
+You are a senior software engineer
+writing practical technical notes.
 
-Never invent employer/project experience,
-production metrics,
-links,
-or citations.
+Never fabricate:
+- production usage
+- employers
+- metrics
+- customers
+- URLs
+- citations
 """,
         f"""
 Write a practical Markdown article.
@@ -459,14 +543,17 @@ Category:
 Requirements:
 
 - 380 to 600 words
-- explain the concept clearly
-- include a practical mini-POC angle
-- include a section called "What I learned"
-- include a section called "Key Takeaways"
-- sound like a developer documenting an experiment
-- no marketing language
+- clear explanation
+- practical engineering angle
+- include a mini-POC perspective
+- include:
+  ## What I learned
+- include:
+  ## Key Takeaways
+- natural developer tone
+- avoid marketing language
 - no external URLs
-- no company/client references
+- no employer/client references
 - no fabricated production experience
 
 Return article only.
@@ -503,18 +590,28 @@ def generate_poc(
         "efcore",
         "azure"
     }:
-        language = "csharp"
+
+        language = (
+            "csharp"
+        )
 
     elif category == "sql":
-        language = "sql"
+
+        language = (
+            "sql"
+        )
 
     else:
-        language = "python"
+
+        language = (
+            "python"
+        )
 
     code = ollama_chat(
         model,
         """
-Create a small credible developer proof-of-concept.
+Create a small,
+credible developer proof-of-concept.
 
 Return code only.
 No Markdown fences.
@@ -536,14 +633,14 @@ Language:
 
 Requirements:
 
-- approximately 18-55 lines
+- 18 to 55 lines
 - demonstrate one core idea
-- runnable or very close to runnable
-- meaningful code, not pseudo-code
+- runnable or nearly runnable
+- meaningful implementation
 - comments only where useful
-- no fake credentials
+- no fake secrets
 - no fake APIs
-- no unnecessary dependencies
+- avoid unnecessary packages
 
 Return only code.
 """,
@@ -558,6 +655,7 @@ Return only code.
     if len(
         code.splitlines()
     ) < 8:
+
         raise ValueError(
             "POC too short."
         )
@@ -582,10 +680,11 @@ def generate_readme(
         model,
         """
 Write concise README content
-for a technical mini-POC.
+for a practical technical POC.
 """,
         f"""
-Write 140-230 words of Markdown.
+Write 140 to 230 words
+of Markdown.
 
 POC:
 {title}
@@ -596,7 +695,7 @@ Topic:
 Language:
 {language}
 
-Use:
+Include:
 
 ## What this demonstrates
 
@@ -607,6 +706,7 @@ Use:
 ## Things to try
 
 No external links.
+
 Return Markdown only.
 """,
         temperature=0.25,
@@ -615,7 +715,7 @@ Return Markdown only.
 
 
 # ============================================================
-# DIAGRAM
+# DIAGRAM STEPS
 # ============================================================
 
 def generate_diagram_steps(
@@ -626,28 +726,26 @@ def generate_diagram_steps(
     raw = ollama_chat(
         model,
         """
-Return short architecture/process
-steps only.
+Return short technical
+flow steps only.
 """,
         f"""
-For this topic:
+Create 4-6 concise technical
+diagram steps.
 
+Topic:
 {topic}
 
 Title:
-
 {title}
 
-Provide 4-6 concise flow steps
-for a technical diagram.
+Rules:
 
-Each step:
-- 2 to 6 words
+- 2-6 words per step
 - one step per line
-
-Do not number them.
-Do not use bullets.
-No explanation.
+- no numbering
+- no bullets
+- no explanation
 """,
         temperature=0.15,
         timeout_seconds=160
@@ -664,6 +762,7 @@ No explanation.
         ).strip()
 
         if line:
+
             steps.append(
                 line
             )
@@ -680,7 +779,7 @@ No explanation.
 
 
 # ============================================================
-# LINKEDIN CODE SNIPPET
+# CODE SNIPPET FOR LINKEDIN
 # ============================================================
 
 def snippet_from_code(
@@ -688,10 +787,10 @@ def snippet_from_code(
     max_lines=12
 ):
     """
-    Avoid posting only imports/usings.
+    Avoid showing only imports/usings.
 
-    Skip leading boilerplate and show
-    the first useful implementation section.
+    Prefer the first useful
+    implementation section.
     """
 
     lines = [
@@ -728,12 +827,14 @@ def snippet_from_code(
                 skip_prefixes
             )
         ):
+
             start += 1
             continue
 
         break
 
     if start >= len(lines):
+
         start = 0
 
     snippet = lines[
@@ -743,7 +844,8 @@ def snippet_from_code(
 
     meaningful = [
         line
-        for line in snippet
+        for line
+        in snippet
         if line.strip()
     ]
 
@@ -758,6 +860,49 @@ def snippet_from_code(
     return "\n".join(
         snippet
     ).strip()
+
+
+# ============================================================
+# CONTEXTUAL EMOJIS
+# ============================================================
+
+def emoji_for_category(
+    category,
+    topic
+):
+    topic_lower = (
+        topic.lower()
+    )
+
+    if category == "ai":
+
+        if "agent" in topic_lower:
+            return "🤖"
+
+        if "rag" in topic_lower:
+            return "🧠"
+
+        if "security" in topic_lower:
+            return "🛡️"
+
+        return "🤖"
+
+    if category == "azure":
+        return "☁️"
+
+    if category == "sql":
+        return "🗄️"
+
+    if category == "system-design":
+        return "🏗️"
+
+    if category == "efcore":
+        return "⚙️"
+
+    if category == "dotnet":
+        return "⚙️"
+
+    return "🔍"
 
 
 # ============================================================
@@ -879,6 +1024,7 @@ def hashtags_for(
             keyword in topic_lower
             and tag not in tags
         ):
+
             tags.insert(
                 1,
                 tag
@@ -888,7 +1034,7 @@ def hashtags_for(
 
 
 # ============================================================
-# LINKEDIN HUMAN BODY
+# HUMAN LINKEDIN BODY
 # ============================================================
 
 def generate_linkedin_body(
@@ -897,35 +1043,52 @@ def generate_linkedin_body(
     topic,
     title
 ):
+    contextual_emoji = (
+        emoji_for_category(
+            category,
+            topic
+        )
+    )
+
     body = ollama_chat(
         model,
         """
-You write LinkedIn posts in the voice
-of a hands-on software engineer.
+You write LinkedIn posts
+in the voice of a hands-on
+software engineer.
 
-The automation genuinely created a
-small POC.
+The automation genuinely
+created a small POC.
 
-It is valid to say things such as:
+Therefore it is valid to say:
 - I explored...
 - I tried...
 - I built a small POC...
+- I spent some time experimenting...
 - One thing that stood out...
 
-Never claim this was used at an employer
-or in production unless explicitly told.
+Never claim:
+- production usage
+- employer usage
+- customer impact
+unless explicitly provided.
 
 Use REAL line breaks.
+
+Use 1-3 tasteful emojis
+throughout the narrative.
+
+Do not overuse emojis.
 
 Do NOT generate:
 - hashtags
 - URLs
 - code
-- headings
-- Markdown code fences
+- Markdown headings
+- Markdown fences
 """,
         f"""
-Write ONLY the human narrative body
+Write ONLY the human narrative
 for a professional LinkedIn post.
 
 Topic:
@@ -937,36 +1100,53 @@ Category:
 Title:
 {title}
 
+Preferred opening emoji:
+{contextual_emoji}
+
 Requirements:
 
-- approximately 90-145 words
-- engaging first 1-2 lines
+- 90-145 words
+- strong 1-2 line hook
 - natural first-person engineering tone
+- use 1-3 relevant emojis
 - short paragraphs
-- explain what was explored
-- then exactly 3 concise takeaways
-- every takeaway begins with •
-- conclude with one practical takeaway sentence
+- describe what I explored/built
+- exactly 3 concise takeaways
+- each takeaway begins with •
+- finish with one practical observation
 - no hashtags
 - no URLs
 - no code
 - no fake metrics
 - no fake production claims
-- no section title saying "LinkedIn Post"
-- no literal \\n text
+- no employer/client references
+- no heading called "LinkedIn Post"
+- never output literal \\n characters
+
+Avoid generic phrases such as:
+
+"In today's rapidly evolving world"
+
+"Technology is changing faster than ever"
+
+"Let's dive in"
 
 Return body only.
 """,
-        temperature=0.42,
+        temperature=0.45,
         timeout_seconds=260
     )
 
-    body = body.replace(
-        "\\r\\n",
-        "\n"
-    ).replace(
-        "\\n",
-        "\n"
+    body = (
+        body
+        .replace(
+            "\\r\\n",
+            "\n"
+        )
+        .replace(
+            "\\n",
+            "\n"
+        )
     )
 
     return strip_fences(
@@ -975,7 +1155,7 @@ Return body only.
 
 
 # ============================================================
-# FINAL LINKEDIN COMPOSITION
+# FINAL LINKEDIN POST
 # ============================================================
 
 def compose_linkedin_post(
@@ -987,18 +1167,6 @@ def compose_linkedin_post(
     references,
     video
 ):
-    """
-    Final LinkedIn formatting is generated
-    by Python rather than the LLM.
-
-    This guarantees:
-    - spacing
-    - section labels
-    - hashtags
-    - references
-    - POC link
-    """
-
     sections = [
         body.strip()
     ]
@@ -1012,14 +1180,16 @@ def compose_linkedin_post(
 
     sections.append(
         "✅ Key takeaway\n\n"
-        "For me, the useful part of building a small POC is seeing where the concept actually holds up once it reaches code."
+        "For me, the useful part of a small POC is seeing where the concept actually holds up once it reaches code."
     )
 
     if references:
 
         reference_lines = []
 
-        for reference in references[:2]:
+        for reference in (
+            references[:2]
+        ):
 
             reference_title = (
                 reference
@@ -1057,7 +1227,9 @@ def compose_linkedin_post(
 
     if (
         video
-        and video.get("url")
+        and video.get(
+            "url"
+        )
     ):
 
         video_title = (
@@ -1080,15 +1252,18 @@ def compose_linkedin_post(
         + github_url
     )
 
-    hashtag_block = " ".join(
-        hashtags_for(
-            category,
-            topic
+    hashtag_block = (
+        " ".join(
+            hashtags_for(
+                category,
+                topic
+            )
         )
     )
 
     sections.append(
-        hashtag_block
+        "🏷️ "
+        + hashtag_block
     )
 
     return "\n\n".join(
@@ -1106,21 +1281,38 @@ def generate_linkedin_post(
     references,
     video
 ):
-    body = generate_linkedin_body(
-        model,
-        category,
-        topic,
-        title
+    body = (
+        generate_linkedin_body(
+            model,
+            category,
+            topic,
+            title
+        )
     )
 
-    return compose_linkedin_post(
-        category=category,
-        topic=topic,
-        body=body,
-        snippet=snippet,
-        github_url=github_url,
-        references=references,
-        video=video
+    return (
+        compose_linkedin_post(
+            category=
+                category,
+
+            topic=
+                topic,
+
+            body=
+                body,
+
+            snippet=
+                snippet,
+
+            github_url=
+                github_url,
+
+            references=
+                references,
+
+            video=
+                video
+        )
     )
 
 
@@ -1169,11 +1361,37 @@ def validate_package(
             "Prompt marker leaked into LinkedIn post."
         )
 
-    if "#" not in linkedin_post:
+    hashtag_count = len(
+        re.findall(
+            r"(?<!\w)#\w+",
+            linkedin_post
+        )
+    )
+
+    if hashtag_count < 3:
 
         raise ValueError(
-            "LinkedIn post has no hashtags."
+            f"LinkedIn post only has "
+            f"{hashtag_count} hashtags."
         )
+
+    required_sections = [
+        "💻 Small POC",
+        "✅ Key takeaway",
+        "🔗 Full runnable POC",
+        "🏷️"
+    ]
+
+    for section in (
+        required_sections
+    ):
+
+        if section not in linkedin_post:
+
+            raise ValueError(
+                f"Missing LinkedIn section: "
+                f"{section}"
+            )
 
     max_chars = cfg.get(
         "linkedin_max_chars",
@@ -1189,14 +1407,16 @@ def validate_package(
             f"{len(linkedin_post)} characters."
         )
 
-    article_min_words = cfg.get(
-        "article_min_words",
-        300
+    minimum_article_words = (
+        cfg.get(
+            "article_min_words",
+            300
+        )
     )
 
     if len(
         article.split()
-    ) < article_min_words:
+    ) < minimum_article_words:
 
         raise ValueError(
             "Article below minimum word count."
@@ -1225,34 +1445,40 @@ def update_index():
             )
 
             if (
-                folder.is_dir()
-                and article.exists()
+                not folder.is_dir()
+                or not article.exists()
             ):
+                continue
 
-                first_line = (
-                    article
-                    .read_text(
-                        encoding="utf-8"
-                    )
-                    .splitlines()[0]
+            lines = (
+                article
+                .read_text(
+                    encoding="utf-8"
                 )
+                .splitlines()
+            )
 
-                title = (
-                    first_line
-                    .lstrip("# ")
-                    .strip()
-                )
+            if not lines:
+                continue
 
-                relative_path = (
-                    article
-                    .relative_to(ROOT)
-                    .as_posix()
-                )
+            title = (
+                lines[0]
+                .lstrip("# ")
+                .strip()
+            )
 
-                rows.append(
-                    f"- [{title}]"
-                    f"({relative_path})"
+            relative_path = (
+                article
+                .relative_to(
+                    ROOT
                 )
+                .as_posix()
+            )
+
+            rows.append(
+                f"- [{title}]"
+                f"({relative_path})"
+            )
 
     output = (
         "# DevPulse Content Index\n\n"
@@ -1261,7 +1487,9 @@ def update_index():
     if rows:
 
         output += (
-            "\n".join(rows)
+            "\n".join(
+                rows
+            )
             + "\n"
         )
 
@@ -1345,7 +1573,9 @@ def main():
         cfg
     )
 
-    model = cfg["model"]
+    model = cfg[
+        "model"
+    ]
 
     print(
         f"Selected "
@@ -1355,62 +1585,81 @@ def main():
 
     metadata = retry(
         "Metadata",
-        lambda: generate_metadata(
-            model,
-            category,
-            topic
-        ),
+
+        lambda:
+            generate_metadata(
+                model,
+                category,
+                topic
+            ),
+
         3
     )
 
-    title = metadata[
-        "title"
-    ]
+    title = (
+        metadata[
+            "title"
+        ]
+    )
 
-    slug = metadata[
-        "slug"
-    ]
+    slug = (
+        metadata[
+            "slug"
+        ]
+    )
 
     article = retry(
         "Article",
-        lambda: generate_article(
-            model,
-            category,
-            topic,
-            title
-        ),
+
+        lambda:
+            generate_article(
+                model,
+                category,
+                topic,
+                title
+            ),
+
         2
     )
 
     language, code = retry(
         "POC",
-        lambda: generate_poc(
-            model,
-            category,
-            topic,
-            title
-        ),
+
+        lambda:
+            generate_poc(
+                model,
+                category,
+                topic,
+                title
+            ),
+
         3
     )
 
     readme = retry(
         "POC README",
-        lambda: generate_readme(
-            model,
-            topic,
-            title,
-            language
-        ),
+
+        lambda:
+            generate_readme(
+                model,
+                topic,
+                title,
+                language
+            ),
+
         2
     )
 
     diagram_steps = retry(
         "Diagram steps",
-        lambda: generate_diagram_steps(
-            model,
-            topic,
-            title
-        ),
+
+        lambda:
+            generate_diagram_steps(
+                model,
+                topic,
+                title
+            ),
+
         2
     )
 
@@ -1483,16 +1732,34 @@ def main():
 
     linkedin_post = retry(
         "LinkedIn post",
-        lambda: generate_linkedin_post(
-            model=model,
-            category=category,
-            topic=topic,
-            title=title,
-            snippet=snippet,
-            github_url=github_poc_url,
-            references=references,
-            video=video
-        ),
+
+        lambda:
+            generate_linkedin_post(
+                model=
+                    model,
+
+                category=
+                    category,
+
+                topic=
+                    topic,
+
+                title=
+                    title,
+
+                snippet=
+                    snippet,
+
+                github_url=
+                    github_poc_url,
+
+                references=
+                    references,
+
+                video=
+                    video
+            ),
+
         3
     )
 
@@ -1503,15 +1770,19 @@ def main():
         cfg
     )
 
-    article_header = (
-        f"# {title}\n\n"
-        f"**Topic:** {topic}  \n"
-        f"**Category:** {category}\n\n"
-    )
+    # --------------------------------------------------------
+    # SAVE ARTICLE
+    # --------------------------------------------------------
 
     base.mkdir(
         parents=True,
         exist_ok=True
+    )
+
+    article_header = (
+        f"# {title}\n\n"
+        f"**Topic:** {topic}  \n"
+        f"**Category:** {category}\n\n"
     )
 
     (
@@ -1523,6 +1794,10 @@ def main():
         + "\n",
         encoding="utf-8"
     )
+
+    # --------------------------------------------------------
+    # SAVE POC
+    # --------------------------------------------------------
 
     if language == "csharp":
 
@@ -1566,6 +1841,10 @@ def main():
         encoding="utf-8"
     )
 
+    # --------------------------------------------------------
+    # SAVE REFERENCES
+    # --------------------------------------------------------
+
     (
         base
         / "REFERENCES.json"
@@ -1577,6 +1856,10 @@ def main():
         encoding="utf-8"
     )
 
+    # --------------------------------------------------------
+    # GENERATE DIAGRAM
+    # --------------------------------------------------------
+
     image_path = (
         base
         / "diagram.png"
@@ -1587,6 +1870,10 @@ def main():
         diagram_steps,
         image_path
     )
+
+    # --------------------------------------------------------
+    # SAVE LINKEDIN POST
+    # --------------------------------------------------------
 
     LINKEDIN.mkdir(
         exist_ok=True
@@ -1603,7 +1890,15 @@ def main():
         encoding="utf-8"
     )
 
+    # --------------------------------------------------------
+    # UPDATE INDEX
+    # --------------------------------------------------------
+
     update_index()
+
+    # --------------------------------------------------------
+    # UPDATE STATE
+    # --------------------------------------------------------
 
     current_run_key = (
         f"{weekday()}:{slot()}"
@@ -1611,9 +1906,12 @@ def main():
 
     if not force:
 
-        if current_run_key not in state.get(
-            "published_this_week",
-            []
+        if (
+            current_run_key
+            not in state.get(
+                "published_this_week",
+                []
+            )
         ):
 
             state.setdefault(
@@ -1623,9 +1921,12 @@ def main():
                 current_run_key
             )
 
-    if topic not in state.get(
-        "used_topics",
-        []
+    if (
+        topic
+        not in state.get(
+            "used_topics",
+            []
+        )
     ):
 
         state.setdefault(
@@ -1641,6 +1942,10 @@ def main():
         state
     )
 
+    # --------------------------------------------------------
+    # COMMIT MESSAGE
+    # --------------------------------------------------------
+
     (
         ROOT
         / ".devpulse_commit_message"
@@ -1651,20 +1956,44 @@ def main():
         encoding="utf-8"
     )
 
+    # --------------------------------------------------------
+    # MANIFEST FOR THIS RUN ONLY
+    # --------------------------------------------------------
+
     manifest = {
-        "generated": True,
-        "category": category,
-        "topic": topic,
-        "title": title,
-        "slug": slug,
+        "generated":
+            True,
+
+        "category":
+            category,
+
+        "topic":
+            topic,
+
+        "title":
+            title,
+
+        "slug":
+            slug,
+
         "linkedin_file":
-            linkedin_file
-            .relative_to(ROOT)
-            .as_posix(),
+            (
+                linkedin_file
+                .relative_to(
+                    ROOT
+                )
+                .as_posix()
+            ),
+
         "image_file":
-            image_path
-            .relative_to(ROOT)
-            .as_posix(),
+            (
+                image_path
+                .relative_to(
+                    ROOT
+                )
+                .as_posix()
+            ),
+
         "github_poc_url":
             github_poc_url
     }

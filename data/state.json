@@ -5,7 +5,8 @@
     "Saturday:afternoon"
   ],
   "used_topics": [
-    "Transactions in EF Core"
+    "Transactions in EF Core",
+    "Retry and Dead-letter Strategies"
   ],
   "schedule": [
     {

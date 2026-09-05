@@ -2,9 +2,8 @@ name: DevPulse Autonomous Publisher
 
 on:
   schedule:
-    # Three daily windows.
-    # DevPulse itself decides whether the current day/slot is one of the
-    # randomly selected 3–4 publishing slots for the week.
+    # Three time windows per day. DevPulse chooses exactly 3-4 random day/slot
+    # combinations each ISO week.
     - cron: "17 4 * * *"
     - cron: "43 10 * * *"
     - cron: "29 15 * * *"
@@ -45,63 +44,60 @@ jobs:
         with:
           dotnet-version: "8.0.x"
 
-      - name: Install Python dependencies
-        run: |
-          pip install -r requirements.txt
+      - name: Install dependencies
+        run: pip install -r requirements.txt
 
       - name: Install Ollama
         run: |
           curl -fsSL https://ollama.com/install.sh | sh
-
           ollama serve > /tmp/ollama.log 2>&1 &
           echo $! > /tmp/ollama.pid
 
-          echo "Waiting for Ollama to start..."
-
           for i in {1..30}; do
-            if curl -s http://127.0.0.1:11434/api/tags > /dev/null; then
+            if curl -s http://127.0.0.1:11434/api/tags >/dev/null; then
               echo "Ollama is ready."
               break
             fi
-
             sleep 2
           done
 
-      - name: Pull Qwen model
-        run: |
-          ollama pull qwen3:4b-instruct
+      - name: Pull Qwen
+        run: ollama pull qwen3:4b-instruct
 
-      - name: Run DevPulse
+      - name: Run DevPulse V3
         env:
           OLLAMA_URL: http://127.0.0.1:11434/api/chat
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         run: |
           if [ "${{ inputs.force_publish }}" = "true" ]; then
-            echo "Force publishing enabled."
             python src/devpulse.py --force
           else
             python src/devpulse.py
           fi
 
-      - name: Check whether DevPulse generated a LinkedIn post
-        id: linkedin_check
+      - name: Detect generated package
+        id: generated
         run: |
-          if git status --porcelain linkedin-queue/ | grep -q .; then
-            echo "generated=true" >> "$GITHUB_OUTPUT"
-            echo "New LinkedIn content detected."
+          if [ -f .devpulse_manifest.json ]; then
+            echo "value=true" >> "$GITHUB_OUTPUT"
+            echo "New DevPulse package detected."
           else
-            echo "generated=false" >> "$GITHUB_OUTPUT"
-            echo "No new LinkedIn content generated on this run."
+            echo "value=false" >> "$GITHUB_OUTPUT"
+            echo "No package generated in this run."
           fi
 
-      - name: Publish to LinkedIn
-        if: steps.linkedin_check.outputs.generated == 'true'
+      - name: Publish to personal LinkedIn
+        id: linkedin
+        if: steps.generated.outputs.value == 'true'
         env:
           LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
           LINKEDIN_PERSON_ID: ${{ secrets.LINKEDIN_PERSON_ID }}
-        run: |
-          python src/linkedin_publish.py
+          LINKEDIN_VERSION: "202608"
+        run: python src/linkedin_publish.py
 
+      # Always save generated GitHub work, even if LinkedIn temporarily fails.
       - name: Commit generated content
+        if: always()
         run: |
           if git diff --quiet && [ -z "$(git status --porcelain)" ]; then
             echo "Nothing to commit."
@@ -111,29 +107,23 @@ jobs:
           git config user.name "DevPulse Bot"
           git config user.email "devpulse-bot@users.noreply.github.com"
 
-          MSG="chore: update DevPulse state"
-
+          MSG="chore: update DevPulse"
           if [ -f .devpulse_commit_message ]; then
             MSG="$(cat .devpulse_commit_message)"
             rm .devpulse_commit_message
           fi
 
+          # Manifest is per-run control data; do not persist it.
+          rm -f .devpulse_manifest.json
+
           git add .
           git commit -m "$MSG"
           git push
 
-      - name: Workflow summary
+      - name: DevPulse summary
         if: always()
         run: |
-          echo "## DevPulse Run Summary" >> "$GITHUB_STEP_SUMMARY"
+          echo "## DevPulse V3" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
-
-          echo "- Workflow: DevPulse Autonomous Publisher" >> "$GITHUB_STEP_SUMMARY"
-          echo "- Branch: $GITHUB_REF_NAME" >> "$GITHUB_STEP_SUMMARY"
-
-          if [ "${{ steps.linkedin_check.outputs.generated }}" = "true" ]; then
-            echo "- LinkedIn content: Generated" >> "$GITHUB_STEP_SUMMARY"
-            echo "- LinkedIn publish step: Attempted" >> "$GITHUB_STEP_SUMMARY"
-          else
-            echo "- LinkedIn content: Not generated on this run" >> "$GITHUB_STEP_SUMMARY"
-          fi
+          echo "- Generated: ${{ steps.generated.outputs.value }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- LinkedIn step: ${{ steps.linkedin.outcome }}" >> "$GITHUB_STEP_SUMMARY"

@@ -3,7 +3,7 @@
   "min_runs_per_week": 3,
   "max_runs_per_week": 4,
   "article_min_words": 500,
-  "max_repair_attempts": 2,
+  "max_repair_attempts": 4,
   "category_weights": {
     "dotnet": 35,
     "efcore": 20,

@@ -2,14 +2,18 @@
   "model": "qwen3:4b-instruct",
   "min_runs_per_week": 3,
   "max_runs_per_week": 4,
-  "article_min_words": 500,
-  "max_repair_attempts": 4,
   "category_weights": {
-    "dotnet": 35,
-    "efcore": 20,
-    "sql": 15,
+    "ai": 30,
+    "dotnet": 25,
     "azure": 15,
     "system-design": 10,
-    "ai": 5
-  }
+    "efcore": 10,
+    "sql": 10
+  },
+  "article_min_words": 330,
+  "article_max_words": 650,
+  "linkedin_max_chars": 2850,
+  "component_attempts": 3,
+  "linkedin_version": "202608",
+  "github_repo_url": "https://github.com/ketu98/devpulse"
 }

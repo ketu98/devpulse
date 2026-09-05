@@ -1,0 +1,67 @@
+{
+  "dotnet": [
+    "ASP.NET Core Rate Limiting",
+    "IAsyncEnumerable in C#",
+    "BackgroundService in ASP.NET Core",
+    "Dependency Injection Lifetimes",
+    "Minimal APIs vs Controllers",
+    "CancellationToken Best Practices",
+    "HttpClientFactory and Socket Exhaustion",
+    "Middleware Ordering",
+    "Health Checks in ASP.NET Core",
+    "Options Pattern in .NET",
+    "Global Exception Handling",
+    "API Idempotency"
+  ],
+  "efcore": [
+    "EF Core N+1 Query Problem",
+    "AsNoTracking Performance",
+    "Compiled Queries in EF Core",
+    "Optimistic Concurrency",
+    "Transactions in EF Core",
+    "Efficient Pagination",
+    "Split Queries vs Single Queries",
+    "Projection with Select",
+    "Bulk Updates in EF Core"
+  ],
+  "sql": [
+    "SQL Server Indexing Basics",
+    "Covering Indexes",
+    "Execution Plans",
+    "Window Functions",
+    "CTEs vs Temp Tables",
+    "SARGable Queries",
+    "Deadlocks and Isolation Levels",
+    "Offset Pagination vs Keyset Pagination",
+    "Query Parameterization"
+  ],
+  "azure": [
+    "Azure Key Vault with Managed Identity",
+    "Azure Functions Use Cases",
+    "Azure Service Bus Basics",
+    "Retry and Dead-letter Strategies",
+    "Application Insights",
+    "Azure Blob Storage Upload Patterns",
+    "Managed Identity vs Secrets",
+    "Azure Functions Timer Triggers"
+  ],
+  "system-design": [
+    "Cache Aside Pattern",
+    "Rate Limiting Design",
+    "API Gateway Pattern",
+    "Circuit Breaker Pattern",
+    "Event Driven Architecture",
+    "Outbox Pattern",
+    "Distributed Locks",
+    "Database Per Service",
+    "Horizontal vs Vertical Scaling"
+  ],
+  "ai": [
+    "Running Local LLMs with Ollama",
+    "RAG Architecture Basics",
+    "Prompt Versioning",
+    "LLM Output Validation",
+    "Embeddings Explained for Backend Engineers",
+    "Building a Small AI Agent in Python"
+  ]
+}

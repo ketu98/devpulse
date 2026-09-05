@@ -15,7 +15,7 @@ HEADERS = {
     "Authorization": f"Bearer {TOKEN}",
     "Content-Type": "application/json",
     "X-Restli-Protocol-Version": "2.0.0",
-    "Linkedin-Version": "202609",
+    "Linkedin-Version": "202608",
 }
 
 

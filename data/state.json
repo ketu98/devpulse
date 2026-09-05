@@ -6,7 +6,8 @@
   ],
   "used_topics": [
     "Transactions in EF Core",
-    "Retry and Dead-letter Strategies"
+    "Retry and Dead-letter Strategies",
+    "Building RAG with FastAPI"
   ],
   "schedule": [
     {

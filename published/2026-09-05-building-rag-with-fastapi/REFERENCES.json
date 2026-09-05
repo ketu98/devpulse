@@ -1,0 +1,24 @@
+{
+  "references": [
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": ".NET documentation - .NET",
+      "url": "https://learn.microsoft.com/en-us/dotnet/",
+      "description": "...undation Windows Forms .NET Multi-platform App UI (.NET MAUI) Microservices Dapr for .NET developers Cloud native .NET apps Serverless apps with Azure Architecture for containerized .NET apps Deploy a Worker Service to Azure Cloud Azure "
+    },
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Guided Technical Labs",
+      "url": "https://learn.microsoft.com/en-us/labs/",
+      "description": "Mastering GitHub Copilot for Paired Programming This interactive project equips you to ful... Foundry Local Workshop Run language models on your own machine with Foundry Local. Build RAG pipelines, AI agents, and multi-agent workflows in Py"
+    }
+  ],
+  "video": {
+    "type": "video-search",
+    "source": "YouTube",
+    "title": "YouTube results for Building RAG with FastAPI",
+    "url": "https://www.youtube.com/results?search_query=Building+RAG+with+FastAPI+tutorial"
+  }
+}

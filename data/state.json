@@ -1,7 +1,28 @@
 {
-  "week": null,
-  "target_runs": 0,
-  "published_this_week": [],
-  "used_topics": [],
-  "schedule": []
+  "week": "2026-W36",
+  "target_runs": 4,
+  "published_this_week": [
+    "Saturday:afternoon"
+  ],
+  "used_topics": [
+    "Transactions in EF Core"
+  ],
+  "schedule": [
+    {
+      "day": "Monday",
+      "slot": "morning"
+    },
+    {
+      "day": "Tuesday",
+      "slot": "evening"
+    },
+    {
+      "day": "Thursday",
+      "slot": "evening"
+    },
+    {
+      "day": "Friday",
+      "slot": "afternoon"
+    }
+  ]
 }

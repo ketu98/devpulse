@@ -7,7 +7,8 @@
   "used_topics": [
     "Transactions in EF Core",
     "Retry and Dead-letter Strategies",
-    "Building RAG with FastAPI"
+    "Building RAG with FastAPI",
+    "Global Exception Handling"
   ],
   "schedule": [
     {

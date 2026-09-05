@@ -1,57 +1,67 @@
-# DevPulse
+# DevPulse V3
 
-DevPulse is an autonomous developer-presence engine that generates practical technical learning content and small code artifacts using a local Ollama model running inside GitHub Actions.
+DevPulse is an autonomous personal developer-branding pipeline built around GitHub Actions + Ollama.
 
-## What it does
+Each successful publishing run creates:
 
-- Randomly schedules exactly 3 or 4 publish days each ISO week.
-- Uses Ollama + `qwen3:4b-instruct` inside a GitHub-hosted runner.
-- Picks an unused topic from a curated .NET/backend-oriented topic bank.
-- Generates:
-  - a technical Markdown article,
-  - one or more practical code/artifact files,
-  - a recruiter-friendly LinkedIn draft.
-- Blocks known confidential/project terms.
-- Builds generated .NET projects when a `.csproj` is present.
-- Updates the content index and topic state.
-- Commits and pushes the generated work automatically.
+- a practical technical article,
+- a small runnable POC,
+- a short code snippet embedded in a human-style LinkedIn post,
+- verified technical references retrieved from public APIs,
+- a relevant YouTube reference (exact video when a YouTube API key is configured),
+- an automatically rendered technical diagram,
+- a specific GitHub link to the full POC,
+- contextual hashtags,
+- an organic image post on the authenticated personal LinkedIn profile.
 
-## Architecture
+## Topic weighting
 
-GitHub Schedule → DevPulse Scheduler → Ollama/Qwen → Validator → Artifact Writer → optional `dotnet build` → Git commit/push
+- AI / GenAI — 30%
+- .NET / C# — 25%
+- Azure — 15%
+- System Design — 10%
+- EF Core — 10%
+- SQL — 10%
 
-## One-time setup
+## Required GitHub Actions secrets
 
-1. Create a **public GitHub repository** for DevPulse.
-2. Push this repository.
-3. In **Settings → Actions → General → Workflow permissions**, select **Read and write permissions**.
-4. Open the **Actions** tab and enable workflows if GitHub asks.
-5. Run `DevPulse Autonomous Publisher` manually once with `force_publish=true` to test it.
+Repository → Settings → Secrets and variables → Actions:
 
-After that, no machine needs to stay online.
+- `LINKEDIN_ACCESS_TOKEN`
+- `LINKEDIN_PERSON_ID`
 
-## Schedule behavior
+Optional but recommended:
 
-The workflow wakes up in three daily time windows. At the start of each new ISO week, DevPulse randomly chooses 3 or 4 distinct weekdays and randomly assigns one of those time windows to each selected day. Only those exact day/time slots publish.
+- `YOUTUBE_API_KEY`
 
-The generated schedule is stored in `data/state.json`, which is committed back to the repository so every new ephemeral GitHub runner remembers the same weekly plan.
+Without `YOUTUBE_API_KEY`, DevPulse includes a relevant YouTube search link rather than inventing a specific video.
 
-## Topic mix
+## How references work
 
-The default weighting is:
+Ollama is **not allowed to invent URLs**.
 
-- .NET: 35%
-- EF Core: 20%
-- SQL: 15%
-- Azure: 15%
-- System Design: 10%
-- AI: 5%
+DevPulse currently retrieves:
+- Microsoft Learn results from Microsoft's public Learn search API.
+- arXiv results for AI/GenAI topics.
+- YouTube results through the official YouTube Data API when configured.
 
-Edit `data/config.json` to change this.
+The fetched references are also stored in each published package as `REFERENCES.json`.
 
-## Important note about LinkedIn
+## LinkedIn media
 
-`linkedin-queue/` contains ready-to-post drafts. DevPulse V1 deliberately does not use browser automation to log into LinkedIn. Automatic LinkedIn publishing should only be added through an official supported API/integration.
+DevPulse generates `diagram.png`, initializes an image upload through LinkedIn's Images API, uploads the PNG, then attaches the resulting image URN to the organic Posts API request.
+
+## Random schedule
+
+GitHub Actions wakes in three daily windows. At the beginning of an ISO week, DevPulse selects 3 or 4 different weekdays and one random time window for each.
+
+Manual `force_publish=true` tests do not consume one of the weekly scheduled slots.
+
+## Important
+
+The LinkedIn access token is not committed to the repository. Keep it only in GitHub Actions Secrets.
+
+LinkedIn access tokens can expire, so a future reauthorization may be required depending on the token issued to the app.
 
 ## Local test
 
@@ -62,6 +72,8 @@ ollama pull qwen3:4b-instruct
 python src/devpulse.py --force
 ```
 
-## Safety
+For LinkedIn publishing locally, set the two LinkedIn environment variables before running:
 
-DevPulse performs basic validation and rejects content containing selected project/company identifiers. Treat the topic bank and validation rules as configuration, not as a complete security boundary.
+```bash
+python src/linkedin_publish.py
+```

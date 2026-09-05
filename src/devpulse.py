@@ -18,16 +18,24 @@ PUBLISHED = ROOT / "published"
 LINKEDIN = ROOT / "linkedin-queue"
 
 
-def load_json(path):
-    return json.loads(Path(path).read_text(encoding="utf-8"))
+# ============================================================
+# BASIC FILE HELPERS
+# ============================================================
+
+def load_json(path: Path):
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
-def save_json(path, obj):
-    Path(path).write_text(
+def save_json(path: Path, obj):
+    path.write_text(
         json.dumps(obj, indent=2),
         encoding="utf-8"
     )
 
+
+# ============================================================
+# SCHEDULING
+# ============================================================
 
 def iso_week():
     now = dt.datetime.now(dt.timezone.utc)
@@ -40,15 +48,6 @@ def weekday():
 
 
 def slot():
-    """
-    Workflow wakes at approximately:
-      04:17 UTC
-      10:43 UTC
-      15:29 UTC
-
-    Categorize the current execution into a logical slot.
-    """
-
     hour = dt.datetime.now(dt.timezone.utc).hour
 
     if hour < 8:
@@ -97,10 +96,7 @@ def refresh_week(state, cfg):
             "day": day,
             "slot": random.choice(available_slots)
         }
-        for day in sorted(
-            selected_days,
-            key=ordered_days.index
-        )
+        for day in sorted(selected_days, key=ordered_days.index)
     ]
 
     state.update({
@@ -117,10 +113,7 @@ def should_publish(state, force=False):
     if force:
         return True
 
-    today = weekday()
-    current_slot = slot()
-
-    current_key = f"{today}:{current_slot}"
+    current_key = f"{weekday()}:{slot()}"
 
     scheduled = {
         f"{item['day']}:{item['slot']}"
@@ -129,22 +122,19 @@ def should_publish(state, force=False):
 
     return (
         current_key in scheduled
-        and current_key not in state["published_this_week"]
+        and current_key not in state.get("published_this_week", [])
     )
 
+
+# ============================================================
+# TOPIC SELECTION
+# ============================================================
 
 def weighted_category(cfg):
     items = list(cfg["category_weights"].items())
 
-    categories = [
-        item[0]
-        for item in items
-    ]
-
-    weights = [
-        item[1]
-        for item in items
-    ]
+    categories = [item[0] for item in items]
+    weights = [item[1] for item in items]
 
     return random.choices(
         categories,
@@ -154,16 +144,20 @@ def weighted_category(cfg):
 
 
 def choose_topic(topics, state, cfg):
-    unused_topics = []
+    unused = []
 
-    for category, values in topics.items():
-        for topic in values:
-            if topic not in state["used_topics"]:
-                unused_topics.append(
+    used_topics = set(
+        state.get("used_topics", [])
+    )
+
+    for category, topic_list in topics.items():
+        for topic in topic_list:
+            if topic not in used_topics:
+                unused.append(
                     (category, topic)
                 )
 
-    if not unused_topics:
+    if not unused:
         raise RuntimeError(
             "Topic bank exhausted."
         )
@@ -172,21 +166,26 @@ def choose_topic(topics, state, cfg):
 
     candidates = [
         item
-        for item in unused_topics
+        for item in unused
         if item[0] == preferred_category
     ]
 
     if not candidates:
-        candidates = unused_topics
+        candidates = unused
 
     return random.choice(candidates)
 
 
+# ============================================================
+# OLLAMA
+# ============================================================
+
 def ollama_chat(
-    model,
-    system,
-    prompt,
-    temperature=0.4
+    model: str,
+    system: str,
+    prompt: str,
+    temperature: float = 0.3,
+    timeout_seconds: int = 420
 ):
     url = os.environ.get(
         "OLLAMA_URL",
@@ -214,15 +213,19 @@ def ollama_chat(
     response = requests.post(
         url,
         json=payload,
-        timeout=900
+        timeout=timeout_seconds
     )
 
     response.raise_for_status()
 
-    return response.json()["message"]["content"]
+    return response.json()["message"]["content"].strip()
 
 
-def strip_fences(text):
+# ============================================================
+# SMALL JSON METADATA GENERATION
+# ============================================================
+
+def strip_fences(text: str):
     text = text.strip()
 
     if text.startswith("```json"):
@@ -237,34 +240,21 @@ def strip_fences(text):
     return text.strip()
 
 
-def extract_json(text):
-    """
-    Extract the first complete JSON object from an LLM response.
-
-    Handles:
-    - ```json fences
-    - text before JSON
-    - text after JSON
-    - braces inside JSON strings
-    """
-
+def extract_json_object(text: str):
     text = strip_fences(text)
 
     start = text.find("{")
 
     if start == -1:
         raise ValueError(
-            "No JSON object found in model response."
+            "No JSON object found."
         )
 
     depth = 0
     in_string = False
     escape = False
 
-    for index in range(
-        start,
-        len(text)
-    ):
+    for index in range(start, len(text)):
         char = text[index]
 
         if escape:
@@ -287,33 +277,28 @@ def extract_json(text):
                 depth -= 1
 
                 if depth == 0:
-                    return text[
-                        start:index + 1
-                    ]
+                    return text[start:index + 1]
 
     raise ValueError(
-        "Incomplete JSON object returned by model."
+        "Incomplete JSON object."
     )
 
 
-def parse_generated_json(raw):
-    json_text = extract_json(raw)
-
-    try:
-        return json.loads(json_text)
-
-    except json.JSONDecodeError as ex:
-        raise ValueError(
-            f"Invalid generated JSON: {ex}"
-        ) from ex
-
-
-def generation_prompt(
-    category,
-    topic
+def generate_metadata(
+    model: str,
+    category: str,
+    topic: str
 ):
-    return f"""
-Create one practical developer-learning contribution.
+    system = """
+You are DevPulse.
+
+You create concise metadata for practical developer content.
+
+Return strict JSON only.
+"""
+
+    prompt = f"""
+Create metadata for this developer topic.
 
 Topic:
 {topic}
@@ -321,179 +306,441 @@ Topic:
 Category:
 {category}
 
-Audience:
-Recruiters, backend developers, senior engineers,
-and developers learning practical software engineering.
-
-Return ONLY valid JSON.
-
-Use this exact shape:
+Return ONLY this JSON shape:
 
 {{
   "slug": "kebab-case-slug",
-  "title": "human-readable title",
-  "commit_message": "conventional commit message",
-  "article_markdown": "500-900 word Markdown article",
-  "linkedin_post": "120-220 word professional LinkedIn post including 3-5 relevant hashtags",
-  "code_files": [
-    {{
-      "path": "Program.cs",
-      "content": "file content"
-    }},
-    {{
-      "path": "README.md",
-      "content": "file content"
-    }}
-  ]
+  "title": "clear technical title",
+  "commit_message": "short natural git commit message"
 }}
 
-IMPORTANT RULES:
+Rules:
 
-1. Return JSON only.
-2. Do not wrap the result in Markdown fences.
-3. Escape quotes correctly inside JSON strings.
-4. Escape newlines inside JSON strings.
-5. Do not use trailing commas.
-6. Prefer practical examples over theory.
-7. Prefer runnable C#/.NET examples for:
-   - dotnet
-   - efcore
-   - azure
-8. For SQL topics, include a .sql artifact where useful.
-9. For AI / GenAI topics, include:
-   - a small POC,
-   - practical code,
-   - architecture explanation where appropriate.
-10. Do not invent external links.
-11. Do not invent statistics or production metrics.
-12. Never mention:
-   - Bosch
-   - GCMMT
-   - internal company systems
-   - customer names
-   - confidential project information
-13. Make the LinkedIn post useful even without opening GitHub.
-14. Use 3-5 relevant hashtags maximum.
-15. Do not produce generic motivational filler.
+- slug must use lowercase letters, numbers and hyphens only
+- commit message should look natural
+- no markdown fences
+- no explanations
 """
 
+    raw = ollama_chat(
+        model,
+        system,
+        prompt,
+        temperature=0.15,
+        timeout_seconds=180
+    )
 
-def validate_payload(payload):
-    required_fields = [
-        "slug",
-        "title",
-        "commit_message",
-        "article_markdown",
-        "linkedin_post",
-        "code_files"
-    ]
+    obj = json.loads(
+        extract_json_object(raw)
+    )
 
-    for field in required_fields:
-        if field not in payload:
-            raise ValueError(
-                f"Missing required field: {field}"
-            )
-
-    slug = payload["slug"]
+    slug = obj.get("slug", "").strip()
 
     if not re.fullmatch(
         r"[a-z0-9]+(?:-[a-z0-9]+)*",
         slug
     ):
         raise ValueError(
-            "Invalid slug format."
+            f"Invalid slug: {slug}"
         )
 
-    article_words = len(
-        payload["article_markdown"].split()
+    if not obj.get("title"):
+        raise ValueError(
+            "Missing title."
+        )
+
+    if not obj.get("commit_message"):
+        raise ValueError(
+            "Missing commit message."
+        )
+
+    return obj
+
+
+# ============================================================
+# ARTICLE GENERATION
+# ============================================================
+
+def generate_article(
+    model: str,
+    category: str,
+    topic: str,
+    title: str
+):
+    system = """
+You are a senior backend and AI engineering educator.
+
+Write practical, technically careful developer content.
+
+Do not invent production metrics.
+Do not mention confidential companies or projects.
+"""
+
+    prompt = f"""
+Write a practical technical article.
+
+Title:
+{title}
+
+Topic:
+{topic}
+
+Category:
+{category}
+
+Requirements:
+
+- 400 to 650 words
+- Markdown format
+- clear introduction
+- explain why the topic matters
+- include one practical example
+- include one section called "Key Takeaways"
+- avoid generic motivational filler
+- do not invent external links
+- do not mention Bosch, GCMMT, customers, internal systems or confidential work
+- for AI topics, emphasize engineering and implementation
+- for .NET topics, emphasize practical backend usage
+- return article only
+"""
+
+    article = ollama_chat(
+        model,
+        system,
+        prompt,
+        temperature=0.35,
+        timeout_seconds=420
     )
 
-    if article_words < 350:
+    word_count = len(article.split())
+
+    if word_count < 320:
         raise ValueError(
-            f"Article too short: {article_words} words."
+            f"Article too short: {word_count} words."
         )
 
-    linkedin_words = len(
-        payload["linkedin_post"].split()
+    return article
+
+
+# ============================================================
+# LINKEDIN POST GENERATION
+# ============================================================
+
+def generate_linkedin_post(
+    model: str,
+    category: str,
+    topic: str,
+    title: str
+):
+    system = """
+You write professional LinkedIn posts for software engineers.
+
+Make them practical, conversational and technically useful.
+
+Avoid hype and generic filler.
+"""
+
+    prompt = f"""
+Write a LinkedIn post for this technical topic.
+
+Title:
+{title}
+
+Topic:
+{topic}
+
+Category:
+{category}
+
+Requirements:
+
+- 110 to 180 words
+- strong first 1-2 lines
+- practical engineering angle
+- include 2-4 short bullet points if useful
+- mention that a small POC or code sample is available in GitHub
+- end naturally
+- include 3 to 5 contextual hashtags
+- no fake metrics
+- no company/client references
+- no invented external article links
+- return only the LinkedIn post
+"""
+
+    post = ollama_chat(
+        model,
+        system,
+        prompt,
+        temperature=0.4,
+        timeout_seconds=240
     )
 
-    if linkedin_words < 50:
+    if len(post.split()) < 60:
         raise ValueError(
-            "LinkedIn post is too short."
+            "LinkedIn post too short."
         )
 
-    banned_terms = [
-        "bosch",
-        "gcmmt",
-        "customer master data workflow"
-    ]
+    return post
 
-    combined_text = json.dumps(
-        payload
-    ).lower()
 
-    for term in banned_terms:
-        if term in combined_text:
-            raise ValueError(
-                f"Potential confidential reference found: {term}"
-            )
+# ============================================================
+# SMALL POC GENERATION
+# ============================================================
 
-    code_files = payload["code_files"]
+def generate_poc(
+    model: str,
+    category: str,
+    topic: str,
+    title: str
+):
+    system = """
+You create small, practical developer proof-of-concept examples.
 
-    if not isinstance(
-        code_files,
-        list
+Keep examples simple and focused.
+"""
+
+    if category in {"dotnet", "efcore", "azure"}:
+        language = "csharp"
+
+    elif category == "sql":
+        language = "sql"
+
+    else:
+        language = "python"
+
+    prompt = f"""
+Create a very small practical POC for:
+
+Title:
+{title}
+
+Topic:
+{topic}
+
+Category:
+{category}
+
+Preferred language:
+{language}
+
+Return ONLY the code.
+
+Requirements:
+
+- keep it small
+- roughly 15 to 60 lines
+- runnable or very close to runnable
+- demonstrate one core idea only
+- avoid unnecessary dependencies
+- no markdown fences
+- no explanations outside code
+"""
+
+    code = ollama_chat(
+        model,
+        system,
+        prompt,
+        temperature=0.2,
+        timeout_seconds=300
+    )
+
+    if len(code.splitlines()) < 5:
+        raise ValueError(
+            "POC too short."
+        )
+
+    return language, code
+
+
+# ============================================================
+# README FOR THE POC
+# ============================================================
+
+def generate_poc_readme(
+    model: str,
+    topic: str,
+    title: str,
+    language: str
+):
+    system = """
+You write concise README files for small technical demos.
+"""
+
+    prompt = f"""
+Write a concise README for a small proof-of-concept.
+
+Title:
+{title}
+
+Topic:
+{topic}
+
+Language:
+{language}
+
+Requirements:
+
+- Markdown only
+- 150 to 250 words
+- sections:
+  - What this demonstrates
+  - How it works
+  - How to run
+  - Notes
+- no external links
+- no invented metrics
+"""
+
+    return ollama_chat(
+        model,
+        system,
+        prompt,
+        temperature=0.25,
+        timeout_seconds=240
+    )
+
+
+# ============================================================
+# CONTENT GENERATION WITH COMPONENT-LEVEL RETRIES
+# ============================================================
+
+def retry_component(
+    label,
+    func,
+    attempts=3
+):
+    last_error = None
+
+    for attempt in range(
+        1,
+        attempts + 1
     ):
-        raise ValueError(
-            "code_files must be a list."
-        )
-
-    if not code_files:
-        raise ValueError(
-            "No code/artifact files generated."
-        )
-
-    for file in code_files:
-        if "path" not in file:
-            raise ValueError(
-                "Generated file missing path."
+        try:
+            print(
+                f"{label} attempt "
+                f"{attempt}/{attempts}"
             )
 
-        if "content" not in file:
-            raise ValueError(
-                "Generated file missing content."
+            return func()
+
+        except Exception as ex:
+            last_error = ex
+
+            print(
+                f"{label} failed: {ex}"
             )
 
-        path = Path(
-            file["path"]
-        )
+    raise RuntimeError(
+        f"{label} failed after "
+        f"{attempts} attempts. "
+        f"Last error: {last_error}"
+    )
 
-        if path.is_absolute():
-            raise ValueError(
-                "Absolute output paths are not allowed."
-            )
 
-        if ".." in path.parts:
-            raise ValueError(
-                "Unsafe output path."
-            )
+def generate_content_package(
+    cfg,
+    category,
+    topic
+):
+    model = cfg["model"]
+
+    metadata = retry_component(
+        "Metadata generation",
+        lambda: generate_metadata(
+            model,
+            category,
+            topic
+        ),
+        attempts=3
+    )
+
+    title = metadata["title"]
+
+    article = retry_component(
+        "Article generation",
+        lambda: generate_article(
+            model,
+            category,
+            topic,
+            title
+        ),
+        attempts=3
+    )
+
+    linkedin_post = retry_component(
+        "LinkedIn generation",
+        lambda: generate_linkedin_post(
+            model,
+            category,
+            topic,
+            title
+        ),
+        attempts=3
+    )
+
+    language, poc_code = retry_component(
+        "POC generation",
+        lambda: generate_poc(
+            model,
+            category,
+            topic,
+            title
+        ),
+        attempts=3
+    )
+
+    poc_readme = retry_component(
+        "POC README generation",
+        lambda: generate_poc_readme(
+            model,
+            topic,
+            title,
+            language
+        ),
+        attempts=2
+    )
+
+    return {
+        "slug": metadata["slug"],
+        "title": title,
+        "commit_message": metadata["commit_message"],
+        "article": article,
+        "linkedin_post": linkedin_post,
+        "language": language,
+        "poc_code": poc_code,
+        "poc_readme": poc_readme
+    }
+
+
+# ============================================================
+# WRITE OUTPUT
+# ============================================================
+
+def file_extension(language: str):
+    mapping = {
+        "csharp": "cs",
+        "python": "py",
+        "sql": "sql"
+    }
+
+    return mapping.get(
+        language.lower(),
+        "txt"
+    )
 
 
 def write_output(
     category,
     topic,
-    payload
+    package
 ):
-    today = (
-        dt.datetime
-        .now(dt.timezone.utc)
-        .date()
-        .isoformat()
-    )
+    today = dt.datetime.now(
+        dt.timezone.utc
+    ).date().isoformat()
 
     base = (
         PUBLISHED
-        / f"{today}-{payload['slug']}"
+        / f"{today}-{package['slug']}"
     )
 
     base.mkdir(
@@ -502,19 +749,17 @@ def write_output(
     )
 
     article_header = (
-        f"# {payload['title']}\n\n"
+        f"# {package['title']}\n\n"
         f"**Topic:** {topic}  \n"
         f"**Category:** {category}\n\n"
     )
 
-    article_path = (
+    (
         base
         / "ARTICLE.md"
-    )
-
-    article_path.write_text(
+    ).write_text(
         article_header
-        + payload["article_markdown"].strip()
+        + package["article"].strip()
         + "\n",
         encoding="utf-8"
     )
@@ -528,29 +773,42 @@ def write_output(
         exist_ok=True
     )
 
-    for file in payload["code_files"]:
-        destination = (
-            sample_dir
-            / file["path"]
-        )
+    extension = file_extension(
+        package["language"]
+    )
 
-        destination.parent.mkdir(
-            parents=True,
-            exist_ok=True
-        )
+    if extension == "cs":
+        code_filename = "Program.cs"
 
-        destination.write_text(
-            file["content"],
-            encoding="utf-8"
-        )
+    elif extension == "py":
+        code_filename = "main.py"
+
+    elif extension == "sql":
+        code_filename = "demo.sql"
+
+    else:
+        code_filename = "example.txt"
+
+    (
+        sample_dir
+        / code_filename
+    ).write_text(
+        package["poc_code"].strip()
+        + "\n",
+        encoding="utf-8"
+    )
+
+    (
+        sample_dir
+        / "README.md"
+    ).write_text(
+        package["poc_readme"].strip()
+        + "\n",
+        encoding="utf-8"
+    )
 
     LINKEDIN.mkdir(
         exist_ok=True
-    )
-
-    linkedin_path = (
-        LINKEDIN
-        / f"{today}-{payload['slug']}.md"
     )
 
     github_link = (
@@ -559,19 +817,81 @@ def write_output(
         "https://github.com/ketu98/devpulse"
     )
 
-    linkedin_text = (
-        payload["linkedin_post"].strip()
+    linkedin_content = (
+        package["linkedin_post"].strip()
         + github_link
         + "\n"
     )
 
+    linkedin_path = (
+        LINKEDIN
+        / f"{today}-{package['slug']}.md"
+    )
+
     linkedin_path.write_text(
-        linkedin_text,
+        linkedin_content,
         encoding="utf-8"
     )
 
     return base
 
+
+# ============================================================
+# VALIDATION
+# ============================================================
+
+def validate_generated_content(
+    category,
+    topic,
+    package
+):
+    combined = (
+        package["article"]
+        + "\n"
+        + package["linkedin_post"]
+        + "\n"
+        + package["poc_code"]
+    ).lower()
+
+    banned_terms = [
+        "bosch",
+        "gcmmt",
+        "customer master data workflow"
+    ]
+
+    for term in banned_terms:
+        if term in combined:
+            raise ValueError(
+                f"Potential confidential reference found: {term}"
+            )
+
+    if len(
+        package["article"].split()
+    ) < 320:
+        raise ValueError(
+            "Article validation failed."
+        )
+
+    if len(
+        package["linkedin_post"].split()
+    ) < 60:
+        raise ValueError(
+            "LinkedIn validation failed."
+        )
+
+    if not package["poc_code"].strip():
+        raise ValueError(
+            "POC code is empty."
+        )
+
+    print(
+        "Content package validation passed."
+    )
+
+
+# ============================================================
+# OPTIONAL BUILD
+# ============================================================
 
 def maybe_dotnet_build(base):
     projects = list(
@@ -580,17 +900,12 @@ def maybe_dotnet_build(base):
 
     if not projects:
         print(
-            "No .csproj generated. "
+            "No generated .csproj found. "
             "Skipping dotnet build."
         )
         return
 
     for project in projects:
-        print(
-            f"Building generated project: "
-            f"{project}"
-        )
-
         subprocess.run(
             [
                 "dotnet",
@@ -604,23 +919,22 @@ def maybe_dotnet_build(base):
         )
 
 
+# ============================================================
+# INDEX
+# ============================================================
+
 def update_index():
     rows = []
 
     if PUBLISHED.exists():
-        folders = sorted(
+        for folder in sorted(
             PUBLISHED.iterdir(),
             reverse=True
-        )
-
-        for folder in folders:
+        ):
             if not folder.is_dir():
                 continue
 
-            article = (
-                folder
-                / "ARTICLE.md"
-            )
+            article = folder / "ARTICLE.md"
 
             if not article.exists():
                 continue
@@ -648,16 +962,16 @@ def update_index():
                 f"- [{title}]({relative})"
             )
 
-    content = (
+    output = (
         "# DevPulse Content Index\n\n"
     )
 
     if rows:
-        content += "\n".join(rows)
-        content += "\n"
+        output += "\n".join(rows)
+        output += "\n"
 
     else:
-        content += (
+        output += (
             "_No content published yet._\n"
         )
 
@@ -665,163 +979,14 @@ def update_index():
         ROOT
         / "CONTENT_INDEX.md"
     ).write_text(
-        content,
+        output,
         encoding="utf-8"
     )
 
 
-def generate_payload(
-    cfg,
-    category,
-    topic
-):
-    system_prompt = """
-You are DevPulse, a careful senior backend and AI engineering educator.
-
-Your job is to create practical,
-technically accurate developer content.
-
-Return strict JSON only.
-
-Prefer correctness,
-working examples,
-and practical explanations
-over hype.
-"""
-
-    max_repair_attempts = cfg.get(
-        "max_repair_attempts",
-        4
-    )
-
-    payload = None
-    raw = None
-    last_error = None
-
-    total_attempts = (
-        max_repair_attempts + 1
-    )
-
-    for attempt in range(
-        1,
-        total_attempts + 1
-    ):
-        try:
-            if attempt == 1:
-                print(
-                    "Generating DevPulse content..."
-                )
-
-                raw = ollama_chat(
-                    cfg["model"],
-                    system_prompt,
-                    generation_prompt(
-                        category,
-                        topic
-                    ),
-                    temperature=0.35
-                )
-
-            else:
-                repair_number = (
-                    attempt - 1
-                )
-
-                print(
-                    f"Repair attempt "
-                    f"{repair_number}/"
-                    f"{max_repair_attempts}"
-                )
-
-                repair_prompt = f"""
-The previous response was invalid.
-
-Topic:
-{topic}
-
-Category:
-{category}
-
-Validation error:
-{last_error}
-
-Repair the response.
-
-CRITICAL RULES:
-
-1. Return ONLY JSON.
-2. Do NOT use ```json fences.
-3. Do NOT add explanations before or after the JSON.
-4. Escape all newline characters inside JSON string values using \\n.
-5. Escape double quotes inside code strings.
-6. Do not include trailing commas.
-7. Ensure every key/value pair is separated by a comma.
-8. Ensure Python json.loads() can parse the response.
-9. Do not remove required fields.
-10. Preserve the intended technical content.
-
-Required structure:
-
-{{
-  "slug": "kebab-case-slug",
-  "title": "title",
-  "commit_message": "commit message",
-  "article_markdown": "markdown article",
-  "linkedin_post": "linkedin post with hashtags",
-  "code_files": [
-    {{
-      "path": "Program.cs",
-      "content": "file content"
-    }}
-  ]
-}}
-
-Previous response:
-
-{raw}
-"""
-
-                raw = ollama_chat(
-                    cfg["model"],
-                    system_prompt,
-                    repair_prompt,
-                    temperature=0.1
-                )
-
-            payload = parse_generated_json(
-                raw
-            )
-
-            validate_payload(
-                payload
-            )
-
-            print(
-                "Generated content validated successfully."
-            )
-
-            return payload
-
-        except Exception as ex:
-            last_error = str(ex)
-
-            print(
-                f"Generation attempt "
-                f"{attempt} failed:"
-            )
-
-            print(
-                last_error
-            )
-
-            payload = None
-
-    raise RuntimeError(
-        "Unable to generate valid content "
-        f"after {total_attempts} attempts. "
-        f"Last error: {last_error}"
-    )
-
+# ============================================================
+# MAIN
+# ============================================================
 
 def main():
     force = (
@@ -880,16 +1045,22 @@ def main():
         f"{topic}"
     )
 
-    payload = generate_payload(
+    package = generate_content_package(
         cfg,
         category,
         topic
     )
 
+    validate_generated_content(
+        category,
+        topic,
+        package
+    )
+
     base = write_output(
         category,
         topic,
-        payload
+        package
     )
 
     maybe_dotnet_build(
@@ -899,25 +1070,29 @@ def main():
     update_index()
 
     run_key = (
-        f"{weekday()}:"
-        f"{slot()}"
+        f"{weekday()}:{slot()}"
     )
 
-    if run_key not in state[
-        "published_this_week"
-    ]:
-        state[
-            "published_this_week"
-        ].append(
-            run_key
-        )
+    if not force:
+        if run_key not in state.get(
+            "published_this_week",
+            []
+        ):
+            state.setdefault(
+                "published_this_week",
+                []
+            ).append(
+                run_key
+            )
 
-    if topic not in state[
-        "used_topics"
-    ]:
-        state[
-            "used_topics"
-        ].append(
+    if topic not in state.get(
+        "used_topics",
+        []
+    ):
+        state.setdefault(
+            "used_topics",
+            []
+        ).append(
             topic
         )
 
@@ -930,18 +1105,19 @@ def main():
         ROOT
         / ".devpulse_commit_message"
     ).write_text(
-        payload[
+        package[
             "commit_message"
         ].strip(),
         encoding="utf-8"
     )
 
     print(
-        f"Published locally: {base}"
+        f"DevPulse package written to: "
+        f"{base}"
     )
 
     print(
-        "LinkedIn content generated."
+        "LinkedIn post generated successfully."
     )
 
     return 0

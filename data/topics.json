@@ -1,4 +1,44 @@
 {
+  "ai": [
+    "RAG Architecture Basics",
+    "Hybrid Search for RAG",
+    "Chunking Strategies for RAG",
+    "Reranking in Retrieval Pipelines",
+    "Embeddings Explained for Backend Engineers",
+    "Vector Databases Explained",
+    "Prompt Engineering for Production Applications",
+    "Structured LLM Outputs",
+    "LLM Output Validation",
+    "Reducing Hallucinations in GenAI Applications",
+    "Guardrails for LLM Applications",
+    "LLM Evaluation Strategies",
+    "Building AI Agents in Python",
+    "Tool Calling with LLMs",
+    "Agent Memory Patterns",
+    "Multi-Agent Workflows",
+    "Model Context Protocol for AI Applications",
+    "Model Routing Strategies",
+    "Caching LLM Responses",
+    "AI Observability",
+    "Cost-Aware Model Selection",
+    "Building RAG with FastAPI",
+    "Integrating GenAI with .NET APIs",
+    "Streaming LLM Responses in Web APIs",
+    "Local LLM vs Hosted LLM Tradeoffs",
+    "Semantic Search vs Keyword Search",
+    "Context Window Management",
+    "Retrieval Quality Testing",
+    "Prompt Injection Defenses",
+    "Document Ingestion Pipelines",
+    "Building an AI Chat Backend",
+    "Async Processing for LLM Workloads",
+    "LLM Retry and Fallback Strategies",
+    "Evaluation Datasets for GenAI",
+    "Agent Orchestration Patterns",
+    "Function Calling vs Tool Calling",
+    "When Not to Use RAG",
+    "Designing Production AI APIs"
+  ],
   "dotnet": [
     "ASP.NET Core Rate Limiting",
     "IAsyncEnumerable in C#",
@@ -11,7 +51,33 @@
     "Health Checks in ASP.NET Core",
     "Options Pattern in .NET",
     "Global Exception Handling",
-    "API Idempotency"
+    "API Idempotency",
+    "Polly Retry and Circuit Breaker Patterns",
+    "Output Caching in ASP.NET Core"
+  ],
+  "azure": [
+    "Azure Key Vault with Managed Identity",
+    "Azure Functions Use Cases",
+    "Azure Service Bus Basics",
+    "Retry and Dead-letter Strategies",
+    "Application Insights",
+    "Azure Blob Storage Upload Patterns",
+    "Managed Identity vs Secrets",
+    "Azure Functions Timer Triggers",
+    "Azure Service Bus Sessions",
+    "Azure API Management Policies"
+  ],
+  "system-design": [
+    "Cache Aside Pattern",
+    "Rate Limiting Design",
+    "API Gateway Pattern",
+    "Circuit Breaker Pattern",
+    "Event Driven Architecture",
+    "Outbox Pattern",
+    "Distributed Locks",
+    "Database Per Service",
+    "Horizontal vs Vertical Scaling",
+    "Idempotent API Design"
   ],
   "efcore": [
     "EF Core N+1 Query Problem",
@@ -34,34 +100,5 @@
     "Deadlocks and Isolation Levels",
     "Offset Pagination vs Keyset Pagination",
     "Query Parameterization"
-  ],
-  "azure": [
-    "Azure Key Vault with Managed Identity",
-    "Azure Functions Use Cases",
-    "Azure Service Bus Basics",
-    "Retry and Dead-letter Strategies",
-    "Application Insights",
-    "Azure Blob Storage Upload Patterns",
-    "Managed Identity vs Secrets",
-    "Azure Functions Timer Triggers"
-  ],
-  "system-design": [
-    "Cache Aside Pattern",
-    "Rate Limiting Design",
-    "API Gateway Pattern",
-    "Circuit Breaker Pattern",
-    "Event Driven Architecture",
-    "Outbox Pattern",
-    "Distributed Locks",
-    "Database Per Service",
-    "Horizontal vs Vertical Scaling"
-  ],
-  "ai": [
-    "Running Local LLMs with Ollama",
-    "RAG Architecture Basics",
-    "Prompt Versioning",
-    "LLM Output Validation",
-    "Embeddings Explained for Backend Engineers",
-    "Building a Small AI Agent in Python"
   ]
 }

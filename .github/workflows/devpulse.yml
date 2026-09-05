@@ -1,0 +1,90 @@
+name: DevPulse Autonomous Publisher
+
+on:
+  schedule:
+    # Three irregular-looking windows each day.
+    # DevPulse selects exactly one window on each of 3-4 random days per week.
+    - cron: "17 4 * * *"
+    - cron: "43 10 * * *"
+    - cron: "29 15 * * *"
+  workflow_dispatch:
+    inputs:
+      force_publish:
+        description: "Force a publication on this run"
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+concurrency:
+  group: devpulse-publisher
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Install Ollama
+        run: |
+          curl -fsSL https://ollama.com/install.sh | sh
+          ollama serve > /tmp/ollama.log 2>&1 &
+          echo $! > /tmp/ollama.pid
+          for i in {1..30}; do
+            curl -s http://127.0.0.1:11434/api/tags >/dev/null && break
+            sleep 2
+          done
+
+      - name: Pull model
+        run: ollama pull qwen3:4b-instruct
+
+      - name: Run DevPulse
+        env:
+          OLLAMA_URL: http://127.0.0.1:11434/api/chat
+        run: |
+          if [ "${{ inputs.force_publish }}" = "true" ]; then
+            python src/devpulse.py --force
+          else
+            python src/devpulse.py
+          fi
+
+      - name: Commit generated content
+        run: |
+          if git diff --quiet && [ -z "$(git status --porcelain)" ]; then
+            echo "Nothing to commit."
+            exit 0
+          fi
+
+          git config user.name "DevPulse Bot"
+          git config user.email "devpulse-bot@users.noreply.github.com"
+
+          MSG="chore: update DevPulse state"
+          if [ -f .devpulse_commit_message ]; then
+            MSG="$(cat .devpulse_commit_message)"
+            rm .devpulse_commit_message
+          fi
+
+          git add .
+          git commit -m "$MSG"
+          git push

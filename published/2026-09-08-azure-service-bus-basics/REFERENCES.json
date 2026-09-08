@@ -1,0 +1,24 @@
+{
+  "references": [
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Student Credentials - Student Hub",
+      "url": "https://learn.microsoft.com/en-us/training/student-hub/credentials",
+      "description": "Microsoft Learn Student Hub Student Credentials Prove your technical skills with Microsoft\u2011verified credentials, from role\u2011based Certifications to scenario\u2011based Applied Skills. Then earn a Microsoft Certification or Applied Skills credenti"
+    },
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "AZ-305 Microsoft Azure Architect Design Prerequisites - Training",
+      "url": "https://learn.microsoft.com/en-us/training/paths/microsoft-azure-architect-design-prerequisites/",
+      "description": "AZ-305 Microsoft Azure Architect Design Prerequisites At a glance Level Intermediate Skill Product Azure Storage Azure Virtual Network Role Solution Architect Subject Architecture Learn the basic Azure concepts you'll need to know as an Azu"
+    }
+  ],
+  "video": {
+    "type": "video-search",
+    "source": "YouTube",
+    "title": "YouTube results for Azure Service Bus Basics",
+    "url": "https://www.youtube.com/results?search_query=Azure+Service+Bus+Basics+tutorial"
+  }
+}

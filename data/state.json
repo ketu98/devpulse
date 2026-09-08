@@ -1,12 +1,15 @@
 {
   "week": "2026-W37",
   "target_runs": 3,
-  "published_this_week": [],
+  "published_this_week": [
+    "Tuesday:afternoon"
+  ],
   "used_topics": [
     "Transactions in EF Core",
     "Retry and Dead-letter Strategies",
     "Building RAG with FastAPI",
-    "Global Exception Handling"
+    "Global Exception Handling",
+    "Azure Service Bus Basics"
   ],
   "schedule": [
     {

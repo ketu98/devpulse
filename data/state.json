@@ -1,28 +1,33 @@
 {
-  "week": "2026-W37",
-  "target_runs": 3,
+  "week": "2026-W38",
+  "target_runs": 4,
   "published_this_week": [
-    "Tuesday:afternoon"
+    "Monday:afternoon"
   ],
   "used_topics": [
     "Transactions in EF Core",
     "Retry and Dead-letter Strategies",
     "Building RAG with FastAPI",
     "Global Exception Handling",
-    "Azure Service Bus Basics"
+    "Azure Service Bus Basics",
+    "Document Ingestion Pipelines"
   ],
   "schedule": [
     {
       "day": "Monday",
-      "slot": "morning"
-    },
-    {
-      "day": "Tuesday",
       "slot": "afternoon"
     },
     {
-      "day": "Thursday",
-      "slot": "morning"
+      "day": "Wednesday",
+      "slot": "evening"
+    },
+    {
+      "day": "Friday",
+      "slot": "afternoon"
+    },
+    {
+      "day": "Sunday",
+      "slot": "afternoon"
     }
   ]
 }

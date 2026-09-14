@@ -1,0 +1,24 @@
+{
+  "references": [
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Microsoft Fabric documentation - Microsoft Fabric",
+      "url": "https://learn.microsoft.com/en-us/fabric/",
+      "description": "Microsoft Fabric documentation Microsoft Fabric is a unified platform that can meet your organization's data and analytics needs. Data Factory Solve complex data ingestion, transformation, and orchestration scenarios. Data Warehouse Analyze"
+    },
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Microsoft Foundry documentation",
+      "url": "https://learn.microsoft.com/en-us/azure/foundry/",
+      "description": "Microsoft Foundry documentation The AI app and agent factory - build, optimize, and govern AI apps and agents at scale. Overview What is Microsoft Foundry. Concept Choose how to build Quickstart Quickstart: Build with models and agents Quic"
+    }
+  ],
+  "video": {
+    "type": "video-search",
+    "source": "YouTube",
+    "title": "YouTube results for Document Ingestion Pipelines",
+    "url": "https://www.youtube.com/results?search_query=Document+Ingestion+Pipelines+tutorial"
+  }
+}

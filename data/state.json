@@ -2,7 +2,8 @@
   "week": "2026-W38",
   "target_runs": 4,
   "published_this_week": [
-    "Monday:afternoon"
+    "Monday:afternoon",
+    "Wednesday:evening"
   ],
   "used_topics": [
     "Transactions in EF Core",
@@ -10,7 +11,8 @@
     "Building RAG with FastAPI",
     "Global Exception Handling",
     "Azure Service Bus Basics",
-    "Document Ingestion Pipelines"
+    "Document Ingestion Pipelines",
+    "Output Caching in ASP.NET Core"
   ],
   "schedule": [
     {

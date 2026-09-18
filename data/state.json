@@ -3,7 +3,8 @@
   "target_runs": 4,
   "published_this_week": [
     "Monday:afternoon",
-    "Wednesday:evening"
+    "Wednesday:evening",
+    "Friday:afternoon"
   ],
   "used_topics": [
     "Transactions in EF Core",
@@ -12,7 +13,8 @@
     "Global Exception Handling",
     "Azure Service Bus Basics",
     "Document Ingestion Pipelines",
-    "Output Caching in ASP.NET Core"
+    "Output Caching in ASP.NET Core",
+    "Model Routing Strategies"
   ],
   "schedule": [
     {

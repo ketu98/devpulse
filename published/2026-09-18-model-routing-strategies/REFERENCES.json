@@ -1,0 +1,31 @@
+{
+  "references": [
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Model router for Microsoft Foundry concepts - Microsoft Foundry",
+      "url": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/model-router",
+      "description": "Model router for Microsoft Foundry Summarize this article for me In this article Model router is a trained language model that intelligently routes your prompts in real time to the most suitable large language model (LLM). You deploy model "
+    },
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Microsoft Certified: Azure Network Engineer Associate - Certifications",
+      "url": "https://learn.microsoft.com/en-us/credentials/certifications/azure-network-engineer-associate/",
+      "description": "Certification Microsoft Certified: Azure Network Engineer Associate Demonstrate the design, implementation, and maintenance of Azure networking infrastructure, load balancing traffic, network routing, and more. At a glance Level Intermediat"
+    },
+    {
+      "type": "paper",
+      "source": "arXiv",
+      "title": "Uni-Perceiver-MoE: Learning Sparse Generalist Models with Conditional MoEs",
+      "url": "http://arxiv.org/abs/2206.04674v2",
+      "description": "To build an artificial neural network like the biological intelligence system, recent works have unified numerous tasks into a generalist model, which can process various tasks with shared parameters and do not have any task-specific module"
+    }
+  ],
+  "video": {
+    "type": "video-search",
+    "source": "YouTube",
+    "title": "YouTube results for Model Routing Strategies",
+    "url": "https://www.youtube.com/results?search_query=Model+Routing+Strategies+tutorial"
+  }
+}

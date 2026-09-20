@@ -4,7 +4,8 @@
   "published_this_week": [
     "Monday:afternoon",
     "Wednesday:evening",
-    "Friday:afternoon"
+    "Friday:afternoon",
+    "Sunday:afternoon"
   ],
   "used_topics": [
     "Transactions in EF Core",
@@ -14,7 +15,8 @@
     "Azure Service Bus Basics",
     "Document Ingestion Pipelines",
     "Output Caching in ASP.NET Core",
-    "Model Routing Strategies"
+    "Model Routing Strategies",
+    "Embeddings Explained for Backend Engineers"
   ],
   "schedule": [
     {

@@ -1,5 +1,6 @@
 # DevPulse Content Index
 
+- [Embeddings Explained for Backend Engineers](published/2026-09-20-embeddings-explained-for-backend-engineers/ARTICLE.md)
 - [Model Routing Strategies for Scalable AI Systems](published/2026-09-18-model-routing-strategies/ARTICLE.md)
 - [Mastering Output Caching in ASP.NET Core Applications](published/2026-09-16-output-caching-in-asp-net-core/ARTICLE.md)
 - [Designing Efficient Document Ingestion Pipelines for AI Systems](published/2026-09-14-document-ingestion-pipelines/ARTICLE.md)

@@ -1,0 +1,24 @@
+{
+  "references": [
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Study Guide for Exam DP-800: Developing AI-Enabled Database Solutions",
+      "url": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/dp-800",
+      "description": "Study Guide for Exam DP-800: Developing AI-Enabled Database Solutions Summarize this article for me In this article Purpose of this document This study guide should help you understand what to expect on the exam and includes a summary of th"
+    },
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Study Guide for Exam DP-700: Implementing Data Engineering Solutions Using Microsoft Fabric",
+      "url": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/dp-700",
+      "description": "Study Guide for Exam DP-700: Implementing Data Engineering Solutions Using Microsoft Fabric Summarize this article for me In this article Purpose of this document This study guide should help you understand what to expect on the exam and in"
+    }
+  ],
+  "video": {
+    "type": "video-search",
+    "source": "YouTube",
+    "title": "YouTube results for Embeddings Explained for Backend Engineers",
+    "url": "https://www.youtube.com/results?search_query=Embeddings+Explained+for+Backend+Engineers+tutorial"
+  }
+}

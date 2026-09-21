@@ -1,11 +1,8 @@
 {
-  "week": "2026-W38",
+  "week": "2026-W39",
   "target_runs": 4,
   "published_this_week": [
-    "Monday:afternoon",
-    "Wednesday:evening",
-    "Friday:afternoon",
-    "Sunday:afternoon"
+    "Monday:afternoon"
   ],
   "used_topics": [
     "Transactions in EF Core",
@@ -16,7 +13,8 @@
     "Document Ingestion Pipelines",
     "Output Caching in ASP.NET Core",
     "Model Routing Strategies",
-    "Embeddings Explained for Backend Engineers"
+    "Embeddings Explained for Backend Engineers",
+    "Health Checks in ASP.NET Core"
   ],
   "schedule": [
     {
@@ -28,12 +26,12 @@
       "slot": "evening"
     },
     {
-      "day": "Friday",
+      "day": "Thursday",
       "slot": "afternoon"
     },
     {
       "day": "Sunday",
-      "slot": "afternoon"
+      "slot": "evening"
     }
   ]
 }

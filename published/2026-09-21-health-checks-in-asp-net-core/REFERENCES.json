@@ -1,0 +1,24 @@
+{
+  "references": [
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "C# Guide - .NET managed language - C#",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/",
+      "description": "C# language documentation The C# guide contains articles, tutorials, and code samples to help you get started with C# and the .NET platform. ASP.NET Core in Visual Studio ASP.NET MVC apps in Windows containers Blazor: Interactive client-sid"
+    },
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": ".NET documentation - .NET",
+      "url": "https://learn.microsoft.com/en-us/dotnet/",
+      "description": ".NET documentation Learn to use .NET to create applications on any platform using C#, F#, and Visual Basic. Web ASP.NET Core tutorials What is ASP.NET Core. NET API reference API reference documentation for .NET ASP.NET Core API reference A"
+    }
+  ],
+  "video": {
+    "type": "video-search",
+    "source": "YouTube",
+    "title": "YouTube results for Health Checks in ASP.NET Core",
+    "url": "https://www.youtube.com/results?search_query=Health+Checks+in+ASP.NET+Core+tutorial"
+  }
+}

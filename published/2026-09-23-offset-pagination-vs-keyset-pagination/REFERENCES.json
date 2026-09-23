@@ -1,0 +1,24 @@
+{
+  "references": [
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Entity Framework documentation hub",
+      "url": "https://learn.microsoft.com/en-us/ef/",
+      "description": "Entity Framework documentation hub Entity Framework is a modern object-relation mapper that lets you build a clean, portable, and high-level data access layer with .NET (C#) across a variety of databases, including SQL Database (on-premises"
+    },
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Data API builder documentation - Data API builder",
+      "url": "https://learn.microsoft.com/en-us/azure/data-api-builder/",
+      "description": "Data API builder documentation Data API builder generates REST and GraphQL endpoints for your databases, including SQL Server, Azure SQL, Azure Cosmos DB, PostgreSQL, and MySQL. It also includes an MCP server for AI agent integration. Open "
+    }
+  ],
+  "video": {
+    "type": "video-search",
+    "source": "YouTube",
+    "title": "YouTube results for Offset Pagination vs Keyset Pagination",
+    "url": "https://www.youtube.com/results?search_query=Offset+Pagination+vs+Keyset+Pagination+tutorial"
+  }
+}

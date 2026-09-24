@@ -1,0 +1,24 @@
+{
+  "references": [
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Agent Framework documentation",
+      "url": "https://learn.microsoft.com/en-us/agent-framework/",
+      "description": "Overview Introduction to Agent Framework GitHub Repository Check out Python samples for Agent Framework Check out C# samples for Agent Framework Get Started Steps 1-2: Your First Agent and Tools Step 3: Multi-Turn Conversations Step 4: Memo"
+    },
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "ASP.NET Core fundamentals overview",
+      "url": "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/",
+      "description": "This article provides an overview of the fundamentals for building ASP.NET Core apps, including dependency injection (DI), configuration, and middleware. The database context instance is used to process all of the orders where the IsProcess"
+    }
+  ],
+  "video": {
+    "type": "video-search",
+    "source": "YouTube",
+    "title": "YouTube results for Middleware Ordering",
+    "url": "https://www.youtube.com/results?search_query=Middleware+Ordering+tutorial"
+  }
+}

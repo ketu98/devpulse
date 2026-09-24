@@ -1,5 +1,6 @@
 # DevPulse Content Index
 
+- [Understanding Middleware Ordering in ASP.NET Core](published/2026-09-24-middleware-ordering-in-dotnet/ARTICLE.md)
 - [offset-pagination-vs-keyset-pagination](published/2026-09-23-offset-pagination-vs-keyset-pagination/ARTICLE.md)
 - [Health Checks in ASP.NET Core: Monitor and Maintain Application Stability](published/2026-09-21-health-checks-in-asp-net-core/ARTICLE.md)
 - [Embeddings Explained for Backend Engineers](published/2026-09-20-embeddings-explained-for-backend-engineers/ARTICLE.md)

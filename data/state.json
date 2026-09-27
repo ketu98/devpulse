@@ -4,7 +4,8 @@
   "published_this_week": [
     "Monday:afternoon",
     "Wednesday:evening",
-    "Thursday:afternoon"
+    "Thursday:afternoon",
+    "Sunday:evening"
   ],
   "used_topics": [
     "Transactions in EF Core",
@@ -18,7 +19,8 @@
     "Embeddings Explained for Backend Engineers",
     "Health Checks in ASP.NET Core",
     "Offset Pagination vs Keyset Pagination",
-    "Middleware Ordering"
+    "Middleware Ordering",
+    "Building AI Agents in Python"
   ],
   "schedule": [
     {

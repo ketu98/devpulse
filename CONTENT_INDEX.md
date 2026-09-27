@@ -1,5 +1,6 @@
 # DevPulse Content Index
 
+- [Building AI Agents in Python: A Practical Guide](published/2026-09-27-building-ai-agents-in-python/ARTICLE.md)
 - [Understanding Middleware Ordering in ASP.NET Core](published/2026-09-24-middleware-ordering-in-dotnet/ARTICLE.md)
 - [offset-pagination-vs-keyset-pagination](published/2026-09-23-offset-pagination-vs-keyset-pagination/ARTICLE.md)
 - [Health Checks in ASP.NET Core: Monitor and Maintain Application Stability](published/2026-09-21-health-checks-in-asp-net-core/ARTICLE.md)

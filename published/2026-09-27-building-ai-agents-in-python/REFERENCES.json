@@ -1,0 +1,24 @@
+{
+  "references": [
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Microsoft Foundry documentation",
+      "url": "https://learn.microsoft.com/en-us/azure/foundry/",
+      "description": "Microsoft Foundry documentation The AI app and agent factory - build, optimize, and govern AI apps and agents at scale. Overview What is Microsoft Foundry. Concept Choose how to build Quickstart Quickstart: Build with models and agents Quic"
+    },
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Azure developer documentation",
+      "url": "https://learn.microsoft.com/en-us/azure/developer/",
+      "description": "Learn through quickstarts, tutorials, and toolkits for building applications, AI integration, deployment, and resource management. NET Azure SDK for .NET API reference Developer center Python Azure SDK for Python API reference Developer cen"
+    }
+  ],
+  "video": {
+    "type": "video-search",
+    "source": "YouTube",
+    "title": "YouTube results for Building AI Agents in Python",
+    "url": "https://www.youtube.com/results?search_query=Building+AI+Agents+in+Python+tutorial"
+  }
+}

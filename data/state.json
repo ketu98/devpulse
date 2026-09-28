@@ -1,7 +1,9 @@
 {
   "week": "2026-W40",
   "target_runs": 4,
-  "published_this_week": [],
+  "published_this_week": [
+    "Monday:evening"
+  ],
   "used_topics": [
     "Transactions in EF Core",
     "Retry and Dead-letter Strategies",
@@ -15,7 +17,8 @@
     "Health Checks in ASP.NET Core",
     "Offset Pagination vs Keyset Pagination",
     "Middleware Ordering",
-    "Building AI Agents in Python"
+    "Building AI Agents in Python",
+    "API Idempotency"
   ],
   "schedule": [
     {

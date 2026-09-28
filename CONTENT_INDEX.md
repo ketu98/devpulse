@@ -1,5 +1,6 @@
 # DevPulse Content Index
 
+- [Implementing API Idempotency in .NET Services](published/2026-09-28-api-idempotency-in-dotnet/ARTICLE.md)
 - [Building AI Agents in Python: A Practical Guide](published/2026-09-27-building-ai-agents-in-python/ARTICLE.md)
 - [Understanding Middleware Ordering in ASP.NET Core](published/2026-09-24-middleware-ordering-in-dotnet/ARTICLE.md)
 - [offset-pagination-vs-keyset-pagination](published/2026-09-23-offset-pagination-vs-keyset-pagination/ARTICLE.md)

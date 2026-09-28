@@ -1,0 +1,24 @@
+{
+  "references": [
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Web API Design Best Practices - Azure Architecture Center",
+      "url": "https://learn.microsoft.com/en-us/azure/architecture/best-practices/api-design",
+      "description": "Best practices for RESTful web API design Summarize this article for me In this article A RESTful web API implementation is a web API that employs Representationa... Important PUT requests must be idempotent, which means that submitting the"
+    },
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": ".NET documentation - .NET",
+      "url": "https://learn.microsoft.com/en-us/dotnet/",
+      "description": ".NET documentation Learn to use .NET to create applications o... NET API reference API reference documentation for .NET ASP.NET Core API reference API reference documentation for ASP.NET Core C# language reference C# language reference and "
+    }
+  ],
+  "video": {
+    "type": "video-search",
+    "source": "YouTube",
+    "title": "YouTube results for API Idempotency",
+    "url": "https://www.youtube.com/results?search_query=API+Idempotency+tutorial"
+  }
+}

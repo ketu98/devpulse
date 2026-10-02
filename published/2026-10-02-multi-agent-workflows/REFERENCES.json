@@ -1,0 +1,24 @@
+{
+  "references": [
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Microsoft Foundry documentation",
+      "url": "https://learn.microsoft.com/en-us/azure/foundry/",
+      "description": "Microsoft Foundry documentation The AI app and agent factory - build, optimize, and govern AI apps and agents at scale. Overview What is Microsoft Foundry. Concept Choose how to build Quickstart Quickstart: Build with models and agents Quic"
+    },
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Compare declarative and custom engine agents",
+      "url": "https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/agents-overview",
+      "description": "Compare declarative and custom engine agents Summarize this article for me In this article Microsoft 365 Copilot is an AI-powered productivity tool that enhances workflows across Microsoft 365 applications like Copilot Chat, Outlook, Teams,"
+    }
+  ],
+  "video": {
+    "type": "video-search",
+    "source": "YouTube",
+    "title": "YouTube results for Multi-Agent Workflows",
+    "url": "https://www.youtube.com/results?search_query=Multi-Agent+Workflows+tutorial"
+  }
+}

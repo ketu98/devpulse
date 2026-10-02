@@ -1,5 +1,6 @@
 # DevPulse Content Index
 
+- [Designing Efficient Multi-Agent Workflows for AI Systems](published/2026-10-02-multi-agent-workflows/ARTICLE.md)
 - [Implementing API Idempotency in .NET Services](published/2026-09-28-api-idempotency-in-dotnet/ARTICLE.md)
 - [Building AI Agents in Python: A Practical Guide](published/2026-09-27-building-ai-agents-in-python/ARTICLE.md)
 - [Understanding Middleware Ordering in ASP.NET Core](published/2026-09-24-middleware-ordering-in-dotnet/ARTICLE.md)

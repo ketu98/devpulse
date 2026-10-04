@@ -3,7 +3,8 @@
   "target_runs": 4,
   "published_this_week": [
     "Monday:evening",
-    "Friday:afternoon"
+    "Friday:afternoon",
+    "Sunday:evening"
   ],
   "used_topics": [
     "Transactions in EF Core",
@@ -20,7 +21,8 @@
     "Middleware Ordering",
     "Building AI Agents in Python",
     "API Idempotency",
-    "Multi-Agent Workflows"
+    "Multi-Agent Workflows",
+    "IAsyncEnumerable in C#"
   ],
   "schedule": [
     {

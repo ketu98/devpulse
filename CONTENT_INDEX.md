@@ -1,5 +1,6 @@
 # DevPulse Content Index
 
+- [Understanding Dependency Injection Lifetimes in .NET](published/2026-10-12-dependency-injection-lifetimes/ARTICLE.md)
 - [async-enum-in-c](published/2026-10-04-async-enum-in-c/ARTICLE.md)
 - [Designing Efficient Multi-Agent Workflows for AI Systems](published/2026-10-02-multi-agent-workflows/ARTICLE.md)
 - [Implementing API Idempotency in .NET Services](published/2026-09-28-api-idempotency-in-dotnet/ARTICLE.md)

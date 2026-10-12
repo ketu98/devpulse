@@ -1,7 +1,9 @@
 {
-  "week": "2026-W41",
-  "target_runs": 3,
-  "published_this_week": [],
+  "week": "2026-W42",
+  "target_runs": 4,
+  "published_this_week": [
+    "Monday:afternoon"
+  ],
   "used_topics": [
     "Transactions in EF Core",
     "Retry and Dead-letter Strategies",
@@ -18,20 +20,25 @@
     "Building AI Agents in Python",
     "API Idempotency",
     "Multi-Agent Workflows",
-    "IAsyncEnumerable in C#"
+    "IAsyncEnumerable in C#",
+    "Dependency Injection Lifetimes"
   ],
   "schedule": [
     {
       "day": "Monday",
-      "slot": "morning"
+      "slot": "afternoon"
     },
     {
       "day": "Tuesday",
-      "slot": "morning"
+      "slot": "afternoon"
     },
     {
-      "day": "Friday",
-      "slot": "morning"
+      "day": "Wednesday",
+      "slot": "afternoon"
+    },
+    {
+      "day": "Thursday",
+      "slot": "evening"
     }
   ]
 }

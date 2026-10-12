@@ -1,0 +1,24 @@
+{
+  "references": [
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "DbContext Lifetime, Configuration, and Initialization - EF Core",
+      "url": "https://learn.microsoft.com/en-us/ef/core/dbcontext-configuration/",
+      "description": "DbContext Lifetime, Configuration, and Initialization Summarize this article for me In this article This article shows basic patterns for initialization and configuration of a DbContext instance. The DbContext lifetime The lifetime of a DbC"
+    },
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Dependency injection - .NET",
+      "url": "https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection/overview",
+      "description": ".NET dependency injection Summarize this article for me In this article .NET supports the dependency injection (DI) software design pattern, which is a technique for achieving Inversion of Control (IoC) between classes and their dependencie"
+    }
+  ],
+  "video": {
+    "type": "video-search",
+    "source": "YouTube",
+    "title": "YouTube results for Dependency Injection Lifetimes",
+    "url": "https://www.youtube.com/results?search_query=Dependency+Injection+Lifetimes+tutorial"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "references": [
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Install mobile threat defense app on your mobile device - Microsoft Intune",
+      "url": "https://learn.microsoft.com/en-us/intune/user-help/security/setup-mobile-threat-defense",
+      "description": "Install mobile threat defense app Summarize this article for me In this article Applies to: iOS/iPadOS Android Install a mobile threat defense (MTD) app on the personal device you use for work or school. An MTD app works by detecting and al"
+    },
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Prompt Shields in Azure AI Content Safety - Azure AI services",
+      "url": "https://learn.microsoft.com/en-us/azure/ai-services/content-safety/concepts/jailbreak-detection",
+      "description": "Prompt Shields Summarize this article for me In this article Prompt Shields detects and blocks adversarial inputs to large language models (LLMs). ...actions Document attacks Third party Third-party content, such as documents and emails Cau"
+    },
+    {
+      "type": "paper",
+      "source": "arXiv",
+      "title": "PISmith: Reinforcement Learning-based Red Teaming for Prompt Injection Defenses",
+      "url": "http://arxiv.org/abs/2603.13026v2",
+      "description": "Prompt injection poses serious security risks to real-world LLM applications, particularly autonomous agents. Although many defenses have been proposed, their robustness against adaptive attacks remains insufficiently evaluated, potentially"
+    }
+  ],
+  "video": {
+    "type": "video-search",
+    "source": "YouTube",
+    "title": "YouTube results for Prompt Injection Defenses",
+    "url": "https://www.youtube.com/results?search_query=Prompt+Injection+Defenses+tutorial"
+  }
+}

@@ -3,7 +3,8 @@
   "target_runs": 4,
   "published_this_week": [
     "Monday:afternoon",
-    "Tuesday:afternoon"
+    "Tuesday:afternoon",
+    "Thursday:evening"
   ],
   "used_topics": [
     "Transactions in EF Core",
@@ -23,7 +24,8 @@
     "Multi-Agent Workflows",
     "IAsyncEnumerable in C#",
     "Dependency Injection Lifetimes",
-    "Prompt Injection Defenses"
+    "Prompt Injection Defenses",
+    "Polly Retry and Circuit Breaker Patterns"
   ],
   "schedule": [
     {

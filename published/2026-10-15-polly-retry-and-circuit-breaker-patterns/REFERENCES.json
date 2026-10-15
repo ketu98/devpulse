@@ -1,0 +1,24 @@
+{
+  "references": [
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "AI gateway capabilities in Azure API Management",
+      "url": "https://learn.microsoft.com/en-us/azure/api-management/genai-gateway-capabilities",
+      "description": "... You can also define circuit breaker rules to stop forwarding requests to AI service backends if they're not responsive. Load balancer The backend load balancer supports round-robin, weighted, priority-based, and session-aware load balan"
+    },
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Cloud Design Patterns - Azure Architecture Center",
+      "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/",
+      "description": "Cloud design patterns Summarize this article for me In this article Architects design workloads by integrating platform services, functionality, and code to meet both functional and nonfunctional requirements. Some patterns also build on ot"
+    }
+  ],
+  "video": {
+    "type": "video-search",
+    "source": "YouTube",
+    "title": "YouTube results for Polly Retry and Circuit Breaker Patterns",
+    "url": "https://www.youtube.com/results?search_query=Polly+Retry+and+Circuit+Breaker+Patterns+tutorial"
+  }
+}

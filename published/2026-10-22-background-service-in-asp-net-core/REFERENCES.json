@@ -1,0 +1,24 @@
+{
+  "references": [
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": ".NET documentation - .NET",
+      "url": "https://learn.microsoft.com/en-us/dotnet/",
+      "description": ".NET documentation Learn to use .NET to create applications on any platform using C#, F#, and Visual Basic. Web ASP.NET Core tutorials What is ASP.NET Core. ASP.NET Core in Visual Studio ASP.NET MVC apps in Windows containers Blazor: Intera"
+    },
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": ".NET documentation - .NET",
+      "url": "https://learn.microsoft.com/en-us/dotnet/fundamentals/",
+      "description": ".NET fundamentals documentation Learn the fundamentals of .NET, an open-source developer platform for building many different types of applications. Learn about .NET Download Download .NET Overview What is .NET. Introduction to .NET .NET la"
+    }
+  ],
+  "video": {
+    "type": "video-search",
+    "source": "YouTube",
+    "title": "YouTube results for BackgroundService in ASP.NET Core",
+    "url": "https://www.youtube.com/results?search_query=BackgroundService+in+ASP.NET+Core+tutorial"
+  }
+}

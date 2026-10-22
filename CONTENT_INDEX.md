@@ -1,5 +1,6 @@
 # DevPulse Content Index
 
+- [Implementing a Background Service in ASP.NET Core](published/2026-10-22-background-service-in-asp-net-core/ARTICLE.md)
 - [Implementing Polly Retry and Circuit Breaker Patterns in .NET](published/2026-10-15-polly-retry-and-circuit-breaker-patterns/ARTICLE.md)
 - [Defending Against Prompt Injection in AI Systems](published/2026-10-13-prompt-injection-defenses/ARTICLE.md)
 - [Understanding Dependency Injection Lifetimes in .NET](published/2026-10-12-dependency-injection-lifetimes/ARTICLE.md)

@@ -1,7 +1,9 @@
 {
   "week": "2026-W43",
   "target_runs": 3,
-  "published_this_week": [],
+  "published_this_week": [
+    "Thursday:evening"
+  ],
   "used_topics": [
     "Transactions in EF Core",
     "Retry and Dead-letter Strategies",
@@ -21,7 +23,8 @@
     "IAsyncEnumerable in C#",
     "Dependency Injection Lifetimes",
     "Prompt Injection Defenses",
-    "Polly Retry and Circuit Breaker Patterns"
+    "Polly Retry and Circuit Breaker Patterns",
+    "BackgroundService in ASP.NET Core"
   ],
   "schedule": [
     {

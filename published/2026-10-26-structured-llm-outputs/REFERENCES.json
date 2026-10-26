@@ -1,0 +1,31 @@
+{
+  "references": [
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Fabric data agent creation - Microsoft Fabric",
+      "url": "https://learn.microsoft.com/en-us/fabric/data-science/concept-data-agent",
+      "description": "Fabric data agent concepts Summarize this article for me In this article Data agent in Microsoft Fabric is a generally available feature that enables you to build your own conversational Q&A systems by using generative AI.A Fabric data agen"
+    },
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "LLM Fundamentals",
+      "url": "https://learn.microsoft.com/en-us/agent-framework/journey/llm-fundamentals",
+      "description": "LLM Fundamentals Summarize this article for me In this article Before building AI agents, it helps to understand the technology that powers them: large language models (LLMs). ...ge model is a neural network trained on massive amounts of te"
+    },
+    {
+      "type": "paper",
+      "source": "arXiv",
+      "title": "Where Agent Frameworks Fall Short: Examining Functional Challenges and Usability Concerns",
+      "url": "http://arxiv.org/abs/2602.21806v4",
+      "description": "Large language model (LLM) agents are increasingly built on agent frameworks that provide reusable abstractions for workflow orchestration, state management, tool integration, and execution control. However, the quality of this infrastructu"
+    }
+  ],
+  "video": {
+    "type": "video-search",
+    "source": "YouTube",
+    "title": "YouTube results for Structured LLM Outputs",
+    "url": "https://www.youtube.com/results?search_query=Structured+LLM+Outputs+tutorial"
+  }
+}

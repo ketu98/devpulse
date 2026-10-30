@@ -1,5 +1,6 @@
 # DevPulse Content Index
 
+- [Azure Functions Timer Triggers: Scheduling Workloads with Precision](published/2026-10-30-azure-functions-timer-triggers/ARTICLE.md)
 - [Structured LLM Outputs for Consistent and Reliable AI Responses](published/2026-10-26-structured-llm-outputs/ARTICLE.md)
 - [Implementing a Background Service in ASP.NET Core](published/2026-10-22-background-service-in-asp-net-core/ARTICLE.md)
 - [Implementing Polly Retry and Circuit Breaker Patterns in .NET](published/2026-10-15-polly-retry-and-circuit-breaker-patterns/ARTICLE.md)

@@ -1,0 +1,24 @@
+{
+  "references": [
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Timer trigger for Azure Functions",
+      "url": "https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-timer",
+      "description": "Timer trigger for Azure Functions Summarize this article for me In this article This article explains how to work with timer triggers in Azure Functions. A timer trigger lets you run a function on a schedule. This is reference information f"
+    },
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Migrate C# Apps from In-process to Isolated Worker Model",
+      "url": "https://learn.microsoft.com/en-us/azure/azure-functions/migrate-dotnet-to-isolated-model",
+      "description": "The following table shows the replacements for some of the most commonly used extensions: Scenario Changes to package references Timer trigger AddMicrosoft.Azure.Functions.Worker.Extensions.Timer Storage bindings."
+    }
+  ],
+  "video": {
+    "type": "video-search",
+    "source": "YouTube",
+    "title": "YouTube results for Azure Functions Timer Triggers",
+    "url": "https://www.youtube.com/results?search_query=Azure+Functions+Timer+Triggers+tutorial"
+  }
+}

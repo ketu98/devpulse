@@ -3,7 +3,8 @@
   "target_runs": 4,
   "published_this_week": [
     "Monday:evening",
-    "Friday:evening"
+    "Friday:evening",
+    "Saturday:evening"
   ],
   "used_topics": [
     "Transactions in EF Core",
@@ -27,7 +28,8 @@
     "Polly Retry and Circuit Breaker Patterns",
     "BackgroundService in ASP.NET Core",
     "Structured LLM Outputs",
-    "Azure Functions Timer Triggers"
+    "Azure Functions Timer Triggers",
+    "Application Insights"
   ],
   "schedule": [
     {

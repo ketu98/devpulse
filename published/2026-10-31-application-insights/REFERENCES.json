@@ -1,0 +1,24 @@
+{
+  "references": [
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Microsoft Fabric documentation - Microsoft Fabric",
+      "url": "https://learn.microsoft.com/en-us/fabric/",
+      "description": "Microsoft Fabric documentation Microsoft Fabric is a unified platform that can meet your organization's data and analytics needs. Real-Time Intelligence Discover insights from your streaming data. Quickly ingest, query, create visualization"
+    },
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Official Microsoft Power Apps documentation - Power Apps",
+      "url": "https://learn.microsoft.com/en-us/power-apps/",
+      "description": "Implement healthy application lifecycle management (ALM) using solutions Deploy solutions using pipelines Integrate with other products Visualize data with Power BI Get real-time insights with Azure Synapse Link Add and use apps in Teams Be"
+    }
+  ],
+  "video": {
+    "type": "video-search",
+    "source": "YouTube",
+    "title": "YouTube results for Application Insights",
+    "url": "https://www.youtube.com/results?search_query=Application+Insights+tutorial"
+  }
+}

@@ -1,5 +1,6 @@
 # DevPulse Content Index
 
+- [Monitor and Analyze Azure Application Performance with Application Insights](published/2026-10-31-application-insights/ARTICLE.md)
 - [Azure Functions Timer Triggers: Scheduling Workloads with Precision](published/2026-10-30-azure-functions-timer-triggers/ARTICLE.md)
 - [Structured LLM Outputs for Consistent and Reliable AI Responses](published/2026-10-26-structured-llm-outputs/ARTICLE.md)
 - [Implementing a Background Service in ASP.NET Core](published/2026-10-22-background-service-in-asp-net-core/ARTICLE.md)

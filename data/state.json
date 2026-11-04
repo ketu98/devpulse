@@ -1,7 +1,9 @@
 {
   "week": "2026-W45",
   "target_runs": 4,
-  "published_this_week": [],
+  "published_this_week": [
+    "Wednesday:evening"
+  ],
   "used_topics": [
     "Transactions in EF Core",
     "Retry and Dead-letter Strategies",
@@ -25,7 +27,8 @@
     "BackgroundService in ASP.NET Core",
     "Structured LLM Outputs",
     "Azure Functions Timer Triggers",
-    "Application Insights"
+    "Application Insights",
+    "HttpClientFactory and Socket Exhaustion"
   ],
   "schedule": [
     {

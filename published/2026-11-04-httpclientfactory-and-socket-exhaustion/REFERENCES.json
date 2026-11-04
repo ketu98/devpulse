@@ -1,0 +1,24 @@
+{
+  "references": [
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Use the IHttpClientFactory - .NET",
+      "url": "https://learn.microsoft.com/en-us/dotnet/core/extensions/httpclient-factory",
+      "description": "IHttpClientFactory with .NET Summarize this article for me In this article This article explains how to use the IHttpClientFactory interface to create HttpClient types with .NET fundamentals such as dependency injection (DI), logging, and c"
+    },
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "HttpClient guidelines for .NET - .NET",
+      "url": "https://learn.microsoft.com/en-us/dotnet/fundamentals/networking/http/httpclient-guidelines",
+      "description": "Guidelines for using HttpClient Summarize this article for me In this article The System.Net.Http.HttpClient class sends HTTP requests and receives HTTP responses from a resource identified by a URI. To avoid port exhaustion problems, reuse"
+    }
+  ],
+  "video": {
+    "type": "video-search",
+    "source": "YouTube",
+    "title": "YouTube results for HttpClientFactory and Socket Exhaustion",
+    "url": "https://www.youtube.com/results?search_query=HttpClientFactory+and+Socket+Exhaustion+tutorial"
+  }
+}

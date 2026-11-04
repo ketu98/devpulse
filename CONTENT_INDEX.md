@@ -1,5 +1,6 @@
 # DevPulse Content Index
 
+- [Understanding HttpClientFactory and Socket Exhaustion in .NET](published/2026-11-04-httpclientfactory-and-socket-exhaustion/ARTICLE.md)
 - [Monitor and Analyze Azure Application Performance with Application Insights](published/2026-10-31-application-insights/ARTICLE.md)
 - [Azure Functions Timer Triggers: Scheduling Workloads with Precision](published/2026-10-30-azure-functions-timer-triggers/ARTICLE.md)
 - [Structured LLM Outputs for Consistent and Reliable AI Responses](published/2026-10-26-structured-llm-outputs/ARTICLE.md)

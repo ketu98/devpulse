@@ -2,7 +2,8 @@
   "week": "2026-W45",
   "target_runs": 4,
   "published_this_week": [
-    "Wednesday:evening"
+    "Wednesday:evening",
+    "Thursday:evening"
   ],
   "used_topics": [
     "Transactions in EF Core",
@@ -28,7 +29,8 @@
     "Structured LLM Outputs",
     "Azure Functions Timer Triggers",
     "Application Insights",
-    "HttpClientFactory and Socket Exhaustion"
+    "HttpClientFactory and Socket Exhaustion",
+    "Options Pattern in .NET"
   ],
   "schedule": [
     {

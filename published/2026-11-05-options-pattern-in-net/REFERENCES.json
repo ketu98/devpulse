@@ -1,0 +1,24 @@
+{
+  "references": [
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": ".NET documentation - .NET",
+      "url": "https://learn.microsoft.com/en-us/dotnet/",
+      "description": ".NET documentation Learn to use .NET to create applications on any platform using C#, F#, and Visual Basic. Download Download .NET What's new What's new in .NET Overview Build AI apps in .NET Get started Interactive introduction to C# Overv"
+    },
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "What's new in .NET 11",
+      "url": "https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-11/overview",
+      "description": "What's new in .NET 11 Summarize this article for me In this article This article describes new features in .NET 11. ...DOTNET_TEST_RUNNER environment variable, --use-current-runtime, --test-modules exclusion patterns,Additional dotnet test "
+    }
+  ],
+  "video": {
+    "type": "video-search",
+    "source": "YouTube",
+    "title": "YouTube results for Options Pattern in .NET",
+    "url": "https://www.youtube.com/results?search_query=Options+Pattern+in+.NET+tutorial"
+  }
+}

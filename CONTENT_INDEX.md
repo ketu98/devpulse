@@ -1,5 +1,6 @@
 # DevPulse Content Index
 
+- [The Options Pattern in .NET for Clean and Flexible Configuration](published/2026-11-05-options-pattern-in-net/ARTICLE.md)
 - [Understanding HttpClientFactory and Socket Exhaustion in .NET](published/2026-11-04-httpclientfactory-and-socket-exhaustion/ARTICLE.md)
 - [Monitor and Analyze Azure Application Performance with Application Insights](published/2026-10-31-application-insights/ARTICLE.md)
 - [Azure Functions Timer Triggers: Scheduling Workloads with Precision](published/2026-10-30-azure-functions-timer-triggers/ARTICLE.md)

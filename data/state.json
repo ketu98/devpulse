@@ -30,7 +30,8 @@
     "Azure Functions Timer Triggers",
     "Application Insights",
     "HttpClientFactory and Socket Exhaustion",
-    "Options Pattern in .NET"
+    "Options Pattern in .NET",
+    "Context Window Management"
   ],
   "schedule": [
     {

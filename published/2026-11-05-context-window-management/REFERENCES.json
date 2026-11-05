@@ -1,0 +1,31 @@
+{
+  "references": [
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Microsoft Intune documentation - Microsoft Intune",
+      "url": "https://learn.microsoft.com/en-us/intune/",
+      "description": "Microsoft Intune documentation Explore guides, tutorials, and references for Microsoft Intune. Get started What is Microsoft Intune. What's new What's new in Intune What's new Features in development Overview Microsoft Intune advanced capab"
+    },
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Targeting Resources in Conditional Access Policies - Microsoft Entra ID",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-conditional-access-cloud-apps",
+      "description": "Conditional Access: Target resources Summarize this article for me In this article Overview Target resources (formerly cloud apps, actions, and authentication context) are key signals in a Conditional Access policy. ... let admins assign co"
+    },
+    {
+      "type": "paper",
+      "source": "arXiv",
+      "title": "Token Optimization and Context Window Management in Multi-Agent AI Workflows",
+      "url": "http://arxiv.org/abs/2608.17188v1",
+      "description": "Multi-agent AI workflows are limited not only by model quality but by token cost, latency, and context-window quality. This paper presents a practitioner framework for token optimization and context-window management, grounded in an interna"
+    }
+  ],
+  "video": {
+    "type": "video-search",
+    "source": "YouTube",
+    "title": "YouTube results for Context Window Management",
+    "url": "https://www.youtube.com/results?search_query=Context+Window+Management+tutorial"
+  }
+}

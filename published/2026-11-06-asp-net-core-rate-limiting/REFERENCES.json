@@ -1,0 +1,24 @@
+{
+  "references": [
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": ".NET documentation - .NET",
+      "url": "https://learn.microsoft.com/en-us/dotnet/",
+      "description": ".NET documentation Learn to use .NET to create applications on any platform using C#, F#, and Visual Basic. Web ASP.NET Core tutorials What is ASP.NET Core. NET API reference API reference documentation for .NET ASP.NET Core API reference A"
+    },
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Rate limiting middleware in ASP.NET Core",
+      "url": "https://learn.microsoft.com/en-us/aspnet/core/performance/rate-limit",
+      "description": "Rate limiting middleware in ASP.NET Core Summarize this article for me In this article By Arvin Kahbazi, Maarten Balliauw, and Rick Anderson The Microsoft.AspNetCore.RateLimiting middleware provides rate limiting m... Why use rate limiting "
+    }
+  ],
+  "video": {
+    "type": "video-search",
+    "source": "YouTube",
+    "title": "YouTube results for ASP.NET Core Rate Limiting",
+    "url": "https://www.youtube.com/results?search_query=ASP.NET+Core+Rate+Limiting+tutorial"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "references": [
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "APIs overview",
+      "url": "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/apis",
+      "description": "Minimal APIs - Recommended for new projects Minimal APIs are the recommended approach for building fast HTTP APIs with ASP.NET Core. Here's a simple example that creates an API at the root of the web app: Most APIs accept parameters as part"
+    },
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Generate OpenAPI documents",
+      "url": "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/openapi/aspnetcore-openapi",
+      "description": "Create a new ASP.NET Core Web API (Native AOT) project: Publish the app: Minimal APIs provide built-in support for generating information about endpoints in an app via the Microsoft.AspNetCore.OpenApi package. For information about support "
+    }
+  ],
+  "video": {
+    "type": "video-search",
+    "source": "YouTube",
+    "title": "YouTube results for Minimal APIs vs Controllers",
+    "url": "https://www.youtube.com/results?search_query=Minimal+APIs+vs+Controllers+tutorial"
+  }
+}

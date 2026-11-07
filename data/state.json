@@ -4,7 +4,8 @@
   "published_this_week": [
     "Wednesday:evening",
     "Thursday:evening",
-    "Friday:afternoon"
+    "Friday:afternoon",
+    "Saturday:afternoon"
   ],
   "used_topics": [
     "Transactions in EF Core",
@@ -33,7 +34,8 @@
     "HttpClientFactory and Socket Exhaustion",
     "Options Pattern in .NET",
     "Context Window Management",
-    "ASP.NET Core Rate Limiting"
+    "ASP.NET Core Rate Limiting",
+    "Minimal APIs vs Controllers"
   ],
   "schedule": [
     {

@@ -1,7 +1,9 @@
 {
   "week": "2026-W46",
   "target_runs": 3,
-  "published_this_week": [],
+  "published_this_week": [
+    "Friday:evening"
+  ],
   "used_topics": [
     "Transactions in EF Core",
     "Retry and Dead-letter Strategies",
@@ -30,7 +32,8 @@
     "Options Pattern in .NET",
     "Context Window Management",
     "ASP.NET Core Rate Limiting",
-    "Minimal APIs vs Controllers"
+    "Minimal APIs vs Controllers",
+    "CTEs vs Temp Tables"
   ],
   "schedule": [
     {

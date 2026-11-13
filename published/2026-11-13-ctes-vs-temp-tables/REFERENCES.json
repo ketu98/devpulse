@@ -1,0 +1,24 @@
+{
+  "references": [
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Design and develop database solutions - Training",
+      "url": "https://learn.microsoft.com/en-us/training/paths/design-develop-database-solutions/",
+      "description": "You write advanced T-SQL using techniques such as Common Table Expressions (CTE), window functions, and error handling. You also accelerate your development workflow with AI-assisted tools including GitHub Copilot and Fabric Copilot. Prereq"
+    },
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "WITH common_table_expression (Transact-SQL) - SQL Server",
+      "url": "https://learn.microsoft.com/en-us/sql/t-sql/queries/with-common-table-expression-transact-sql",
+      "description": "WITH common_table_expression (Transact-SQL) Summarize this article for me In this article Applies to: SQL Server Azure SQL Database Azure SQL Managed Instance Azure Synapse Analytics SQL analytics endpoint in Microsoft Fabric Warehouse in M"
+    }
+  ],
+  "video": {
+    "type": "video-search",
+    "source": "YouTube",
+    "title": "YouTube results for CTEs vs Temp Tables",
+    "url": "https://www.youtube.com/results?search_query=CTEs+vs+Temp+Tables+tutorial"
+  }
+}

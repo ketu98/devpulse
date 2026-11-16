@@ -1,9 +1,7 @@
 {
-  "week": "2026-W46",
-  "target_runs": 3,
-  "published_this_week": [
-    "Friday:evening"
-  ],
+  "week": "2026-W47",
+  "target_runs": 4,
+  "published_this_week": [],
   "used_topics": [
     "Transactions in EF Core",
     "Retry and Dead-letter Strategies",
@@ -41,12 +39,16 @@
       "slot": "morning"
     },
     {
-      "day": "Thursday",
+      "day": "Tuesday",
       "slot": "morning"
     },
     {
-      "day": "Friday",
+      "day": "Wednesday",
       "slot": "evening"
+    },
+    {
+      "day": "Saturday",
+      "slot": "morning"
     }
   ]
 }

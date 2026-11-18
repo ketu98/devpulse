@@ -1,0 +1,31 @@
+{
+  "references": [
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "AI gateway capabilities in Azure API Management",
+      "url": "https://learn.microsoft.com/en-us/azure/api-management/genai-gateway-capabilities",
+      "description": "The following basic example demonstrates how to set a TPM limit of 500 per subscription key: More information: LLM token limit policy Semantic caching Semantic caching is a technique that improves the performance of LLM APIs by caching the "
+    },
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "LLM Fundamentals",
+      "url": "https://learn.microsoft.com/en-us/agent-framework/journey/llm-fundamentals",
+      "description": "LLM Fundamentals Summarize this article for me In this article Before building AI agents, it helps to understand the technology that powers them: large language models (LLMs). How inference works When you send a request to an LLM, the model"
+    },
+    {
+      "type": "paper",
+      "source": "arXiv",
+      "title": "Auxiliary uncertainty signals for LLM-assisted systematic review screening: a benchmark across eight Cohen drug-class reviews",
+      "url": "http://arxiv.org/abs/2608.14551v1",
+      "description": "Large language models (LLMs) are increasingly used for title-abstract screening in systematic reviews, but their decisions lack calibrated uncertainty. We show that an auxiliary BERT+GCN classifier supplies a structured uncertainty signal t"
+    }
+  ],
+  "video": {
+    "type": "video-search",
+    "source": "YouTube",
+    "title": "YouTube results for Caching LLM Responses",
+    "url": "https://www.youtube.com/results?search_query=Caching+LLM+Responses+tutorial"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "references": [
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "SQL MCP Server Documentation - SQL MCP Server",
+      "url": "https://learn.microsoft.com/en-us/sql/mcp/",
+      "description": "SQL MCP Server documentation Enable AI agents to safely interact with SQL databases using Model Context Protocol. Model Context Protocol (MCP) Learn how MCP provides a standard way for AI agents to discover and call external tools with pred"
+    },
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Study guide for Exam AB-100: Agentic AI Business Solutions Architect",
+      "url": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ab-100",
+      "description": "Study guide for Exam AB-100: Agentic AI Business Solutions Architect Summarize this article for me In this article Tip A new Practice Assessment experience is available on AI Skills Navigator that more closely aligns with the exam experienc"
+    }
+  ],
+  "video": {
+    "type": "video-search",
+    "source": "YouTube",
+    "title": "YouTube results for Model Context Protocol for AI Applications",
+    "url": "https://www.youtube.com/results?search_query=Model+Context+Protocol+for+AI+Applications+tutorial"
+  }
+}

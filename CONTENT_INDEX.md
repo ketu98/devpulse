@@ -1,5 +1,6 @@
 # DevPulse Content Index
 
+- [Model Context Protocol for AI Applications](published/2026-11-24-model-context-protocol-for-ai-applications/ARTICLE.md)
 - [Caching LLM Responses for Improved Performance and Efficiency](published/2026-11-18-caching-llm-responses/ARTICLE.md)
 - [ctes vs temp tables in sql](published/2026-11-13-ctes-vs-temp-tables/ARTICLE.md)
 - [Minimal APIs vs Controllers in .NET](published/2026-11-07-minimal-apis-vs-controllers/ARTICLE.md)

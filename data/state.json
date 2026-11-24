@@ -1,7 +1,9 @@
 {
   "week": "2026-W48",
   "target_runs": 3,
-  "published_this_week": [],
+  "published_this_week": [
+    "Tuesday:morning"
+  ],
   "used_topics": [
     "Transactions in EF Core",
     "Retry and Dead-letter Strategies",
@@ -32,7 +34,8 @@
     "ASP.NET Core Rate Limiting",
     "Minimal APIs vs Controllers",
     "CTEs vs Temp Tables",
-    "Caching LLM Responses"
+    "Caching LLM Responses",
+    "Model Context Protocol for AI Applications"
   ],
   "schedule": [
     {

@@ -1,0 +1,24 @@
+{
+  "references": [
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "AI gateway capabilities in Azure API Management",
+      "url": "https://learn.microsoft.com/en-us/azure/api-management/genai-gateway-capabilities",
+      "description": "Learn more in the AI gateway in Microsoft Foundry section. Token rate limiting and quotas Configure a token limit policy on your LLM APIs to manage and enforce limits per API consumer based on the usage of AI service tokens. By using this p"
+    },
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Quotas and limits - Microsoft Copilot Studio",
+      "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-quotas",
+      "description": "Quotas and limits Summarize this article for me In this article Note This article describes features used in agent... Plan for throughput and rate limits The quotas and limits in this article define the boundaries for your agents. For guida"
+    }
+  ],
+  "video": {
+    "type": "video-search",
+    "source": "YouTube",
+    "title": "YouTube results for Rate Limiting Design",
+    "url": "https://www.youtube.com/results?search_query=Rate+Limiting+Design+tutorial"
+  }
+}

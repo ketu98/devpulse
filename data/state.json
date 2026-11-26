@@ -35,7 +35,8 @@
     "Minimal APIs vs Controllers",
     "CTEs vs Temp Tables",
     "Caching LLM Responses",
-    "Model Context Protocol for AI Applications"
+    "Model Context Protocol for AI Applications",
+    "Rate Limiting Design"
   ],
   "schedule": [
     {

@@ -2,7 +2,8 @@ name: DevPulse Autonomous Publisher
 
 on:
   schedule:
-    # Three time windows per day. DevPulse chooses exactly 3-4 random day/slot
+    # Three time windows per day.
+    # DevPulse chooses exactly 3-4 random day/slot
     # combinations each ISO week.
     - cron: "17 4 * * *"
     - cron: "43 10 * * *"
@@ -29,52 +30,85 @@ jobs:
     timeout-minutes: 45
 
     steps:
+      # ----------------------------------------
+      # Checkout repository
+      # ----------------------------------------
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
+      # ----------------------------------------
+      # Setup Python
+      # ----------------------------------------
       - name: Setup Python
         uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
+      # ----------------------------------------
+      # Setup .NET
+      # ----------------------------------------
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
         with:
           dotnet-version: "8.0.x"
 
+      # ----------------------------------------
+      # Install dependencies
+      # ----------------------------------------
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      # ----------------------------------------
+      # Install and start Ollama
+      # ----------------------------------------
       - name: Install Ollama
         run: |
           curl -fsSL https://ollama.com/install.sh | sh
+
           ollama serve > /tmp/ollama.log 2>&1 &
           echo $! > /tmp/ollama.pid
 
           for i in {1..30}; do
-            if curl -s http://127.0.0.1:11434/api/tags >/dev/null; then
+            if curl -fsS http://127.0.0.1:11434/api/tags >/dev/null; then
               echo "Ollama is ready."
-              break
+              exit 0
             fi
+
             sleep 2
           done
 
+          echo "Ollama failed to start."
+          cat /tmp/ollama.log
+          exit 1
+
+      # ----------------------------------------
+      # Pull Qwen model
+      # ----------------------------------------
       - name: Pull Qwen
         run: ollama pull qwen3:4b-instruct
 
+      # ----------------------------------------
+      # Execute DevPulse
+      # ----------------------------------------
       - name: Run DevPulse V3
+        id: devpulse
         env:
           OLLAMA_URL: http://127.0.0.1:11434/api/chat
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         run: |
           if [ "${{ inputs.force_publish }}" = "true" ]; then
+            echo "Force publication enabled."
             python src/devpulse.py --force
           else
+            echo "Running scheduled DevPulse execution."
             python src/devpulse.py
           fi
 
+      # ----------------------------------------
+      # Detect generated content
+      # ----------------------------------------
       - name: Detect generated package
         id: generated
         run: |
@@ -86,6 +120,9 @@ jobs:
             echo "No package generated in this run."
           fi
 
+      # ----------------------------------------
+      # Publish to LinkedIn
+      # ----------------------------------------
       - name: Publish to personal LinkedIn
         id: linkedin
         if: steps.generated.outputs.value == 'true'
@@ -95,35 +132,78 @@ jobs:
           LINKEDIN_VERSION: "202608"
         run: python src/linkedin_publish.py
 
-      # Always save generated GitHub work, even if LinkedIn temporarily fails.
+      # ----------------------------------------
+      # Commit generated content
+      # ----------------------------------------
+      # Save generated GitHub work even if
+      # LinkedIn temporarily fails.
+      # ----------------------------------------
       - name: Commit generated content
-        if: always()
+        id: commit
+        if: ${{ always() && !cancelled() && steps.generated.outcome == 'success' }}
         run: |
-          if git diff --quiet && [ -z "$(git status --porcelain)" ]; then
-            echo "Nothing to commit."
-            exit 0
-          fi
+          set -e
 
+          # Configure automated commit identity.
           git config user.name "DevPulse Bot"
           git config user.email "devpulse-bot@users.noreply.github.com"
 
+          # Default commit message.
           MSG="chore: update DevPulse"
-          if [ -f .devpulse_commit_message ]; then
+
+          # Use generated commit message when available.
+          if [ -s .devpulse_commit_message ]; then
             MSG="$(cat .devpulse_commit_message)"
-            rm .devpulse_commit_message
           fi
 
-          # Manifest is per-run control data; do not persist it.
+          # Remove temporary execution files.
+          rm -f .devpulse_commit_message
           rm -f .devpulse_manifest.json
 
-          git add .
-          git commit -m "$MSG"
+          # Stage repository changes.
+          git add -A
+
+          # Check whether changes remain after cleanup.
+          if git diff --cached --quiet; then
+            echo "Nothing to commit."
+            echo "committed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Display staged changes for troubleshooting.
+          echo "Files included in this commit:"
+          git diff --cached --stat
+
+          # Create commit.
+          git commit -m "$MSG" \
+            -m "Automatically generated by DevPulse V3."
+
+          # Push changes to GitHub.
           git push
 
+          echo "committed=true" >> "$GITHUB_OUTPUT"
+          echo "DevPulse changes successfully committed."
+
+      # ----------------------------------------
+      # Generate workflow execution summary
+      # ----------------------------------------
       - name: DevPulse summary
         if: always()
         run: |
-          echo "## DevPulse V3" >> "$GITHUB_STEP_SUMMARY"
+          echo "## DevPulse V3 - Execution Summary" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
-          echo "- Generated: ${{ steps.generated.outputs.value }}" >> "$GITHUB_STEP_SUMMARY"
-          echo "- LinkedIn step: ${{ steps.linkedin.outcome }}" >> "$GITHUB_STEP_SUMMARY"
+
+          echo "| Operation | Result |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|---|---|" >> "$GITHUB_STEP_SUMMARY"
+
+          echo "| DevPulse execution | ${{ steps.devpulse.outcome }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Package generated | ${{ steps.generated.outputs.value || 'false' }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| LinkedIn publishing | ${{ steps.linkedin.outcome }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| GitHub commit created | ${{ steps.commit.outputs.committed || 'false' }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| GitHub commit step | ${{ steps.commit.outcome }} |" >> "$GITHUB_STEP_SUMMARY"
+
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "**Repository:** ${{ github.repository }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "**Branch:** ${{ github.ref_name }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "**Workflow Run:** #${{ github.run_number }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "**Trigger:** ${{ github.event_name }}" >> "$GITHUB_STEP_SUMMARY"

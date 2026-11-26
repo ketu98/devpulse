@@ -1,0 +1,24 @@
+{
+  "references": [
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": ".NET documentation - .NET",
+      "url": "https://learn.microsoft.com/en-us/dotnet/",
+      "description": "ASP.NET Core in Visual Studio ASP.NET MVC apps in Windows containers Blazor: Interactive client-side web UI with .NET F# for web development Mobile .NET Multi-platform App UI (.NET MAUI) Desktop WinUI apps Windows Presentation Foundation Wi"
+    },
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Azure developer documentation",
+      "url": "https://learn.microsoft.com/en-us/azure/developer/",
+      "description": "Azure developer documentation Develop applications on Azure using Python, JavaScript, Java, .NET, Go, C++, and Rust. Learn through quickstarts, tutorials, and toolkits for building applications, AI integration, deployment, and resource mana"
+    }
+  ],
+  "video": {
+    "type": "video-search",
+    "source": "YouTube",
+    "title": "YouTube results for Building an AI Chat Backend",
+    "url": "https://www.youtube.com/results?search_query=Building+an+AI+Chat+Backend+tutorial"
+  }
+}

@@ -36,7 +36,8 @@
     "CTEs vs Temp Tables",
     "Caching LLM Responses",
     "Model Context Protocol for AI Applications",
-    "Rate Limiting Design"
+    "Rate Limiting Design",
+    "Building an AI Chat Backend"
   ],
   "schedule": [
     {

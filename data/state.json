@@ -2,7 +2,8 @@
   "week": "2026-W48",
   "target_runs": 3,
   "published_this_week": [
-    "Tuesday:morning"
+    "Tuesday:morning",
+    "Friday:evening"
   ],
   "used_topics": [
     "Transactions in EF Core",
@@ -37,7 +38,8 @@
     "Caching LLM Responses",
     "Model Context Protocol for AI Applications",
     "Rate Limiting Design",
-    "Building an AI Chat Backend"
+    "Building an AI Chat Backend",
+    "CancellationToken Best Practices"
   ],
   "schedule": [
     {

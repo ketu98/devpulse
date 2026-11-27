@@ -1,0 +1,24 @@
+{
+  "references": [
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Official Microsoft Power Platform documentation - Power Platform",
+      "url": "https://learn.microsoft.com/en-us/power-platform/",
+      "description": "Microsoft Power Platform documentation Explore documentation, training, and videos for Microsoft Power Platform. Learn h... Application lifecycle management (ALM) guide Plan and implement application lifecycle management across Power Platfo"
+    },
+    {
+      "type": "article",
+      "source": "Microsoft Learn",
+      "title": "Microsoft Learn resources",
+      "url": "https://learn.microsoft.com/en-us/training/support/",
+      "description": "Microsoft Learn resources Get answers to frequently asked questions, troubleshoot common issues, and discover features related to Microsoft Learn. Support Frequently asked questions Browse common training issues Report feedback Plans Overvi"
+    }
+  ],
+  "video": {
+    "type": "video-search",
+    "source": "YouTube",
+    "title": "YouTube results for CancellationToken Best Practices",
+    "url": "https://www.youtube.com/results?search_query=CancellationToken+Best+Practices+tutorial"
+  }
+}
